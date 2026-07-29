@@ -1,0 +1,18 @@
+# Datos exportados (listas .txt por cuenta)
+scrapper/
+
+# Scripts alternativos / pruebas locales
+otros/
+
+# Caché local del minificado (el bundle publicado va en public/index.html)
+dist/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Entorno
+.env
+.env.*
+
+.vscode/
