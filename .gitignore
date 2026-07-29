@@ -4,8 +4,10 @@ scrapper/
 # Scripts alternativos / pruebas locales
 otros/
 
-# Caché local del minificado (el bundle publicado va en public/index.html)
+# Caché local del minificado extraer (los bundles publicados van en public/extraer y public/comparar)
 dist/
+
+# Script comparar listo en local: otros/comparar-minified.js (embebido en public/comparar/index.html)
 
 # Comprobación temporal de sintaxis (build)
 .build-check.js

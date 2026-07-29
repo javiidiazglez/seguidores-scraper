@@ -2,7 +2,7 @@
 'use strict';
 
 /**
- * Minifica el extractor con Terser y actualiza public/index.html (GitHub Pages).
+ * Minifica el extractor (extraer) con Terser y embebe otros/comparar-minified.js (comparar) en GitHub Pages.
  *
  *   npm run build
  *   node scripts/build.js otros/otro-archivo.js
@@ -14,9 +14,12 @@ const { execSync } = require('child_process');
 
 const root = path.join(__dirname, '..');
 const defaultSource = path.join(root, 'otros', 'seguidores-seguidos-scrapper_completo.js');
+const compararSource = path.join(root, 'otros', 'comparar-minified.js');
 const cachePath = path.join(root, 'dist', 'dist.js');
-const indexPath = path.join(root, 'public', 'index.html');
+const extraerIndexPath = path.join(root, 'public', 'extraer', 'index.html');
+const compararIndexPath = path.join(root, 'public', 'comparar', 'index.html');
 const syntaxCheckPath = path.join(root, '.build-check.js');
+const bundleScriptId = 'extractor-code';
 
 function rutaTerser() {
     const bin = process.platform === 'win32' ? 'terser.cmd' : 'terser';
@@ -67,7 +70,6 @@ function validarSintaxis(codigo) {
 }
 
 function validarEstructuraIife(codigo) {
-    const inicio = codigo.slice(0, 20);
     const fin = codigo.slice(-12);
     if (!/^\(\(\)|^\(function/.test(codigo)) {
         throw new Error('El minificado no empieza con IIFE ((function o (() =>).');
@@ -77,12 +79,12 @@ function validarEstructuraIife(codigo) {
     }
 }
 
-function leerBundleEmbebido() {
+function leerBundleEmbebido(indexPath) {
     if (!fs.existsSync(indexPath)) {
         return null;
     }
     const html = fs.readFileSync(indexPath, 'utf8');
-    const startTag = '<script id="extractor-code" type="application/json">';
+    const startTag = `<script id="${bundleScriptId}" type="application/json">`;
     const start = html.indexOf(startTag);
     if (start === -1) {
         return null;
@@ -100,13 +102,13 @@ function leerBundleEmbebido() {
     }
 }
 
-function embeberEnIndexHtml(minificado) {
+function embeberEnIndexHtml(indexPath, minificado) {
     const html = fs.readFileSync(indexPath, 'utf8');
-    const startTag = '<script id="extractor-code" type="application/json">';
+    const startTag = `<script id="${bundleScriptId}" type="application/json">`;
     const start = html.indexOf(startTag);
 
     if (start === -1) {
-        console.error('No se encontró <script id="extractor-code"> en public/index.html.');
+        console.error(`No se encontró <script id="${bundleScriptId}"> en ${path.relative(root, indexPath)}.`);
         process.exit(1);
     }
 
@@ -119,13 +121,12 @@ function embeberEnIndexHtml(minificado) {
     }
 
     const payload = JSON.stringify(minificado).replace(/</g, '\\u003c');
-    const actualizado =
-        html.slice(0, contentStart) + payload + html.slice(end);
+    const actualizado = html.slice(0, contentStart) + payload + html.slice(end);
 
     fs.writeFileSync(indexPath, actualizado, 'utf8');
 }
 
-function resolverMinificado() {
+function resolverMinificadoExtraer() {
     const fuenteArg = process.argv[2];
     const fuentePath = fuenteArg
         ? path.isAbsolute(fuenteArg)
@@ -134,22 +135,22 @@ function resolverMinificado() {
         : defaultSource;
 
     if (fs.existsSync(fuentePath)) {
-        console.log('Entrada: Terser →', path.relative(root, fuentePath));
+        console.log('Extraer: Terser →', path.relative(root, fuentePath));
         const minificado = minificarConTerser(fuentePath);
         validarEstructuraIife(minificado);
         validarSintaxis(minificado);
         return minificado;
     }
 
-    const embebido = leerBundleEmbebido();
+    const embebido = leerBundleEmbebido(extraerIndexPath);
     if (embebido) {
-        console.log('Entrada: bundle ya en public/index.html (sin re-minificar)');
+        console.log('Extraer: bundle ya en public/extraer/index.html (sin re-minificar)');
         console.warn('Pasa la ruta del .js en otros/ para regenerar con Terser.');
         return embebido;
     }
 
     console.error(
-        'No hay fuente ni bundle.\n' +
+        'No hay fuente ni bundle para extraer.\n' +
             '  npm install\n' +
             '  npm run build\n' +
             'o: node scripts/build.js otros/seguidores-seguidos-scrapper_completo.js'
@@ -157,29 +158,59 @@ function resolverMinificado() {
     process.exit(1);
 }
 
+function resolverMinificadoComparar() {
+    if (fs.existsSync(compararSource)) {
+        console.log('Comparar: embeber →', path.relative(root, compararSource));
+        const codigo = fs.readFileSync(compararSource, 'utf8').trim();
+        validarSintaxis(codigo);
+        return codigo;
+    }
+
+    const embebido = leerBundleEmbebido(compararIndexPath);
+    if (embebido) {
+        console.log('Comparar: bundle ya en public/comparar/index.html (sin otros/comparar-minified.js local)');
+        console.warn('Coloca otros/comparar-minified.js para regenerar el bundle de comparar.');
+        return embebido;
+    }
+
+    console.error(
+        'No hay otros/comparar-minified.js ni bundle en public/comparar/index.html.\n' +
+            '  Coloca el minificado en otros/comparar-minified.js y ejecuta npm run build'
+    );
+    process.exit(1);
+}
+
 function main() {
-    if (!fs.existsSync(indexPath)) {
-        console.error('Falta public/index.html');
+    if (!fs.existsSync(extraerIndexPath)) {
+        console.error('Falta public/extraer/index.html');
+        process.exit(1);
+    }
+    if (!fs.existsSync(compararIndexPath)) {
+        console.error('Falta public/comparar/index.html');
         process.exit(1);
     }
 
-    let minificado;
+    let minificadoExtraer;
+    let minificadoComparar;
     try {
-        minificado = resolverMinificado();
+        minificadoExtraer = resolverMinificadoExtraer();
+        minificadoComparar = resolverMinificadoComparar();
     } catch (error) {
-        console.error('Error al minificar:', error.message || error);
+        console.error('Error al preparar bundles:', error.message || error);
         console.error('Ejecuta: npm install   (instala terser local)');
         process.exit(1);
     }
 
     fs.mkdirSync(path.dirname(cachePath), { recursive: true });
-    fs.writeFileSync(cachePath, minificado, 'utf8');
-    embeberEnIndexHtml(minificado);
+    fs.writeFileSync(cachePath, minificadoExtraer, 'utf8');
+    embeberEnIndexHtml(extraerIndexPath, minificadoExtraer);
+    embeberEnIndexHtml(compararIndexPath, minificadoComparar);
 
-    console.log('Caché local:', path.relative(root, cachePath));
-    console.log('Actualizado:', path.relative(root, indexPath));
-    console.log('Tamaño minificado:', minificado.length, 'caracteres');
-    console.log('Final:', minificado.slice(-80));
+    console.log('Caché local (extraer):', path.relative(root, cachePath));
+    console.log('Actualizado:', path.relative(root, extraerIndexPath));
+    console.log('Actualizado:', path.relative(root, compararIndexPath));
+    console.log('Tamaño extraer:', minificadoExtraer.length, 'caracteres');
+    console.log('Tamaño comparar:', minificadoComparar.length, 'caracteres');
 }
 
 main();

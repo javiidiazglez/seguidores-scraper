@@ -14,14 +14,12 @@
       --surface-raised: #252525;
       --text: #fafafa;
       --text-muted: #a1a1aa;
-      --text-subtle: #71717a;
       --bar-bg: #f4f4f5;
       --bar-text: #18181b;
       --radius: 1rem;
       --radius-pill: 999px;
       --column: min(540px, 100%);
       --border: rgba(255, 255, 255, 0.08);
-      --success: #34d399;
     }
 
     * {
@@ -85,7 +83,7 @@
       margin-top: 0.15rem;
     }
 
-    .codeBox__wrapper {
+    .hub {
       display: flex;
       width: var(--column);
       flex-direction: column;
@@ -93,41 +91,20 @@
       align-items: stretch;
     }
 
-    .codeBox {
-      width: 100%;
-      user-select: none;
-    }
-
-    pre {
+    .hub__hint {
       border-radius: var(--radius-pill);
-      overflow: hidden !important;
       margin: 0;
       background: var(--bar-bg);
-      padding: 0;
-      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
-    }
-
-    .codeBox pre {
-      overflow: hidden;
-    }
-
-    code,
-    .status-text {
-      display: block;
       padding: 1rem 1.35rem;
       color: var(--bar-text);
-      font-family: inherit !important;
       font-size: 0.9375rem;
       font-weight: 500;
       line-height: 1.5;
-      white-space: normal;
-      overflow-wrap: break-word;
-      user-select: none;
-      pointer-events: none;
       text-align: center;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
     }
 
-    .copy-button {
+    .hub__link {
       padding: 0.875rem 1.25rem;
       width: 100%;
       color: var(--text);
@@ -142,132 +119,22 @@
       justify-content: center;
       align-items: center;
       gap: 0.5rem;
+      text-decoration: none;
       transition: background-color 0.2s ease, border-color 0.2s ease;
     }
 
-    .copy-button:hover:not(:disabled) {
+    .hub__link:hover {
       background-color: var(--surface-raised);
       border-color: rgba(255, 255, 255, 0.12);
     }
 
-    .copy-button:disabled {
-      opacity: 0.45;
-      cursor: wait;
-    }
-
-    .copy-button:active:not(:disabled) {
+    .hub__link:active {
       transform: translateY(1px);
     }
 
-    .copy-button svg {
+    .hub__link svg {
       flex-shrink: 0;
       opacity: 0.95;
-    }
-
-    .confirm-overlay {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      color: var(--text);
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      background: rgba(17, 17, 17, 0.78);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 1.5rem;
-    }
-
-    .confirm-overlay.show {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .confirm-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-      text-align: center;
-      max-width: 400px;
-      width: 100%;
-      padding: 1.75rem 1.5rem 1.5rem;
-      border-radius: var(--radius);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
-      transform: scale(0.96) translateY(6px);
-      opacity: 0;
-      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
-    }
-
-    .confirm-overlay.show .confirm-box {
-      transform: scale(1) translateY(0);
-      opacity: 1;
-    }
-
-    .confirm-box__icon {
-      width: 56px;
-      height: 56px;
-      margin-bottom: 1rem;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(52, 211, 153, 0.1);
-      border: 1px solid rgba(52, 211, 153, 0.28);
-      transform: scale(0.85);
-      opacity: 0;
-    }
-
-    .confirm-overlay.show .confirm-box__icon {
-      animation: confirm-icon-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
-    }
-
-    @keyframes confirm-icon-in {
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-
-    .confirm-box__icon svg {
-      width: 28px;
-      height: 28px;
-    }
-
-    .confirm-box__header__text {
-      font-size: 1.25rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      margin-bottom: 1.25rem;
-    }
-
-    .confirm-box__close {
-      width: 100%;
-    }
-
-    .confirm-box__close button {
-      padding: 0.75rem 1.25rem;
-      width: 100%;
-      background-color: var(--surface-raised);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-pill);
-      font-family: inherit;
-      font-size: 0.9375rem;
-      font-weight: 600;
-      color: var(--text);
-      cursor: pointer;
-      transition: background-color 0.2s ease, border-color 0.2s ease;
-    }
-
-    .confirm-box__close button:hover {
-      background-color: #2e2e2e;
-      border-color: rgba(255, 255, 255, 0.12);
     }
   </style>
 </head>
@@ -280,97 +147,32 @@
       </div>
     </header>
 
-    <div class="codeBox__wrapper">
-      <div class="codeBox">
-        <pre><code id="code" class="status-text">Pulsa «Copiar Código» para copiar el script al portapapeles.</code></pre>
-      </div>
+    <nav class="hub" aria-label="Scripts disponibles">
+      <p class="hub__hint">Elige una ruta para copiar el script en la consola de Instagram.</p>
 
-      <button id="copy-btn" class="copy-button" type="button" disabled onclick="copyToClipboard()">
-        <svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M26 2H9.25C9.1125 2 9 2.1125 9 2.25V4C9 4.1375 9.1125 4.25 9.25 4.25H24.75V25.75C24.75 25.8875 24.8625 26 25 26H26.75C26.8875 26 27 25.8875 27 25.75V3C27 2.44687 26.5531 2 26 2ZM22 6H6C5.44687 6 5 6.44687 5 7V23.5844C5 23.85 5.10625 24.1031 5.29375 24.2906L10.7094 29.7062C10.7781 29.775 10.8563 29.8312 10.9406 29.8781V29.9375H11.0719C11.1812 29.9781 11.2969 30 11.4156 30H22C22.5531 30 23 29.5531 23 29V7C23 6.44687 22.5531 6 22 6ZM10.9375 26.7563L8.24687 24.0625H10.9375V26.7563ZM20.75 27.75H12.9375V23.3125C12.9375 22.6219 12.3781 22.0625 11.6875 22.0625H7.25V8.25H20.75V27.75Z" fill="#FFFFFF" />
+      <a class="hub__link" data-route="extraer" href="extraer/">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 3v12m0 0l4-4m-4 4l-4-4M4 21h16" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        Copiar Código
-      </button>
-    </div>
-  </div>
+        Extraer
+      </a>
 
-  <div class="confirm-overlay" id="overlay">
-    <div class="confirm-box">
-      <div class="confirm-box__icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 6L9 17l-5-5" stroke="var(--success)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <a class="hub__link" data-route="comparar" href="comparar/">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M7 7h10M7 12h6M7 17h8M5 4h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
         </svg>
-      </div>
-      <div class="confirm-box__header__text">Código Copiado</div>
-      <div class="confirm-box__close">
-        <button type="button" onclick="overlayControl('hide')">Cerrar</button>
-      </div>
-    </div>
+        Comparar
+      </a>
+    </nav>
   </div>
-
-  <!-- Rellenado por scripts/build.js -->
-  <script id="extractor-code" type="application/json">"(()=>{\"use strict\";const e=document.getElementById(\"insta-pro-panel\");e&&e.remove();const t=document.getElementById(\"insta-pro-viewer\");t&&t.remove();const n=document.createElement(\"div\");n.id=\"insta-pro-panel\",n.style.cssText=\"\\n        position: fixed; bottom: 20px; right: 20px; z-index: 999999;\\n        background: #18181b; color: #f4f4f5; padding: 20px; border-radius: 14px;\\n        font-family: system-ui, sans-serif; width: 320px;\\n        box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.15);\\n    \",n.innerHTML='\\n        \u003cdiv style=\"display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;\">\\n            \u003cdiv style=\"display: flex; align-items: center; gap: 8px;\">\\n                \u003ch3 style=\"margin: 0; font-size: 1.1rem; color: #e0a33a;\">Extractor Instagram\u003c/h3>\\n                \u003cspan id=\"pro-mode\" style=\"font-size: 0.7rem; color: #34d399; background: rgba(52,211,153,0.1); padding: 2px 6px; border-radius: 4px;\">En espera\u003c/span>\\n            \u003c/div>\\n            \u003cbutton id=\"pro-close\" title=\"Cerrar programa\" style=\"background: transparent; border: none; color: #f87171; font-size: 1.2rem; font-weight: bold; cursor: pointer; line-height: 1; padding: 2px 6px;\">×\u003c/button>\\n        \u003c/div>\\n        \u003cdiv id=\"pro-status\" style=\"font-size: 0.8rem; color: #a1a1aa; margin-bottom: 8px;\">Listo para iniciar el proceso automático\u003c/div>\\n        \u003cdiv id=\"pro-count\" style=\"font-size: 2.2rem; font-weight: 800; color: #62d6d0; margin-bottom: 12px; text-align: center;\">0\u003c/div>\\n        \u003cdiv style=\"display: flex; flex-direction: column; gap: 8px;\">\\n            \u003cbutton id=\"pro-start\" style=\"background: #e0a33a; color: #111; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer;\">🚀 Iniciar Programa Completo\u003c/button>\\n            \u003cdiv id=\"container-downloads\" style=\"display: none; flex-direction: column; gap: 6px;\">\\n                \u003cbutton id=\"btn-dl-seguidores\" style=\"background: #2563eb; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; display: none;\">📥 Descargar Seguidores (.txt)\u003c/button>\\n                \u003cbutton id=\"btn-dl-seguidos\" style=\"background: #7c3aed; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; display: none;\">📥 Descargar Seguidos (.txt)\u003c/button>\\n                \u003cbutton id=\"btn-ver-seguidores-web\" style=\"background: #0f766e; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; display: none;\">👁️ Ver lista web seguidores\u003c/button>\\n                \u003cbutton id=\"btn-ver-seguidos-web\" style=\"background: #0f766e; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; display: none;\">👁️ Ver lista web seguidos\u003c/button>\\n                \u003cbutton id=\"btn-ver-combinada-web\" style=\"background: #0f766e; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; display: none;\">👁️ Ver lista web seguidores+seguidos\u003c/button>\\n                \u003cbutton id=\"btn-dl-html\" style=\"background: #14b8a6; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; display: none;\">💾 Descargar vista web combinada\u003c/button>\\n            \u003c/div>\\n        \u003c/div>\\n    ',document.body.appendChild(n);const r=document.getElementById(\"pro-start\"),o=document.getElementById(\"pro-close\"),i=document.getElementById(\"container-downloads\"),a=document.getElementById(\"btn-dl-seguidores\"),s=document.getElementById(\"btn-dl-seguidos\"),d=document.getElementById(\"btn-ver-seguidores-web\"),l=document.getElementById(\"btn-ver-seguidos-web\"),c=document.getElementById(\"btn-ver-combinada-web\"),u=document.getElementById(\"btn-dl-html\"),p=document.getElementById(\"pro-status\"),g=document.getElementById(\"pro-count\"),b=document.getElementById(\"pro-mode\");let m={seguidores:[],seguidos:[]},f=null,x=null,v=null,y=!1,h=null,w=null,k=!1;function T(){return!document.hidden&&\"visible\"===document.visibilityState}async function E(){try{w&&await w.release()}catch{}w=null}function S(e){const t=e.querySelector(\"div.x6nl9eh.x1a5l9x9.x7vuprf\");if(t)return t.scrollTop=t.scrollHeight,t;const n=Array.from(e.querySelectorAll(\"div\")).filter(e=>{const t=window.getComputedStyle(e);return(\"auto\"===t.overflowY||\"scroll\"===t.overflowY)&&e.scrollHeight>e.clientHeight+40}).sort((e,t)=>t.scrollHeight-e.scrollHeight)[0];return n&&(n.scrollTop=n.scrollHeight),n||null}function L(e){const t=new Map;return e.querySelectorAll('a[role=\"link\"]').forEach(n=>{const r=n.getAttribute(\"href\")||\"\";if(!r.startsWith(\"/\")||r.includes(\"/p/\")||r.includes(\"/reels/\"))return;const o=r.split(\"?\")[0].split(\"/\").filter(Boolean)[0];if(!o||t.has(o))return;const i=function(e,t){let n=e;for(;n&&n!==t;){const e=n.parentElement;if(!e)break;const t=!!e.querySelector(\"img\"),r=!!e.querySelector(\"span\");if(t&&r)return e;n=e}return e.parentElement||e}(n,e),a=function(e,t){return(e.innerText||\"\").split(\"\\n\").map(e=>e.trim()).filter(Boolean).find(e=>{const n=e.toLowerCase();return!(e===t||n.includes(\"seguidores\")||n.includes(\"siguiendo\")||n.includes(\"follow\")||n.startsWith(\"seguir\")||n.startsWith(\"solicitar\"))})||t}(i,o),s=function(e){const t=e.querySelector(\"img\");return t&&(t.currentSrc||t.src||t.getAttribute(\"src\"))||\"\"}(i),d=r.startsWith(\"http\")?r:`https://www.instagram.com${r}`;t.set(o,{username:o,displayName:a,avatar:s,profileUrl:d})}),Array.from(t.values())}function C(e){return e.map(e=>\"string\"==typeof e?{username:e,displayName:e,avatar:\"\",profileUrl:`https://www.instagram.com/${e}/`}:e)}function I(){return{seguidores:C(m.seguidores||[]),seguidos:C(m.seguidos||[])}}async function B(e){if(!e||e.startsWith(\"data:\"))return e||\"\";try{const t=await fetch(e,{mode:\"cors\",credentials:\"omit\"});if(!t.ok)return e;const n=await t.blob();return await new Promise(t=>{const r=new FileReader;r.onloadend=()=>t(\"string\"==typeof r.result?r.result:e),r.onerror=()=>t(e),r.readAsDataURL(n)})}catch{return e}}async function $(e){const t=function(e){const t=e.seguidores.length,n=e.seguidos.length;return`\u003c!doctype html>\\n\u003chtml lang=\"es\">\\n\u003chead>\\n    \u003cmeta charset=\"utf-8\">\\n    \u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\\n    \u003ctitle>Vista de lista\u003c/title>\\n    \u003cstyle>\\n        :root { color-scheme: dark; }\\n        * { box-sizing: border-box; }\\n        body {\\n            margin: 0;\\n            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;\\n            color: #e5e7eb;\\n            background: linear-gradient(180deg, #050816 0%, #0b1220 45%, #060b14 100%);\\n            min-height: 100vh;\\n        }\\n        .viewer {\\n            width: min(1100px, calc(100vw - 24px));\\n            height: min(90vh, 920px);\\n            margin: 12px auto;\\n            background: linear-gradient(180deg, #111827 0%, #0b1220 100%);\\n            border: 1px solid rgba(255,255,255,0.12);\\n            border-radius: 20px;\\n            box-shadow: 0 25px 80px rgba(0,0,0,0.45);\\n            display: flex;\\n            flex-direction: column;\\n            overflow: hidden;\\n        }\\n        .topbar {\\n            display: flex; align-items: center; justify-content: space-between; gap: 12px;\\n            padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,0.08);\\n            background: rgba(255,255,255,0.02);\\n        }\\n        .title { font-size: 1.15rem; font-weight: 800; color: #fbbf24; }\\n        .subtitle { font-size: 0.8rem; color: #94a3b8; margin-top: 4px; }\\n        .tabs { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }\\n        .tab, .closebtn {\\n            border: none; padding: 10px 14px; border-radius: 999px; font-weight: 700; cursor: pointer;\\n        }\\n        .tab.active { background: #2563eb; color: #fff; }\\n        .tab.inactive { background: rgba(255,255,255,0.06); color: #e5e7eb; border: 1px solid rgba(255,255,255,0.12); }\\n        .closebtn { background: rgba(239,68,68,0.12); color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); }\\n        .stats { display: flex; gap: 12px; padding: 14px 20px; flex-wrap: wrap; color: #cbd5e1; font-size: 0.9rem; }\\n        .chip { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 8px 12px; border-radius: 12px; }\\n        .searchwrap { padding: 0 20px 16px; }\\n        .search {\\n            width: 100%; padding: 12px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12);\\n            background: rgba(255,255,255,0.05); color: #f8fafc; outline: none;\\n        }\\n        .list { flex: 1; overflow: auto; padding: 0 20px 20px; }\\n        .row {\\n            display: flex; align-items: center; gap: 14px; padding: 14px 16px; margin-bottom: 10px;\\n            border-radius: 16px; text-decoration: none; color: inherit;\\n            background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));\\n            border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 24px rgba(0,0,0,0.16);\\n        }\\n        .avatar {\\n            width: 56px; height: 56px; border-radius: 50%; overflow: hidden; flex: 0 0 auto;\\n            background: radial-gradient(circle at top left, rgba(251,191,36,0.38), rgba(59,130,246,0.2));\\n            display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,0.14);\\n        }\\n        .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }\\n        .name { font-size: 1rem; font-weight: 800; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }\\n        .display { font-size: 0.86rem; color: #cbd5e1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }\\n        .open { font-size: 0.8rem; color: #94a3b8; font-weight: 700; margin-left: auto; }\\n        .empty { padding: 26px; text-align: center; color: #94a3b8; border: 1px dashed rgba(255,255,255,0.12); border-radius: 16px; margin-top: 10px; }\\n        @media (max-width: 640px) {\\n            .viewer { width: calc(100vw - 10px); height: calc(100vh - 10px); margin: 5px auto; border-radius: 14px; }\\n            .topbar { flex-direction: column; align-items: flex-start; }\\n            .tabs { width: 100%; }\\n        }\\n    \u003c/style>\\n\u003c/head>\\n\u003cbody>\\n    \u003cdiv class=\"viewer\">\\n        \u003cdiv class=\"topbar\">\\n            \u003cdiv>\\n                \u003cdiv class=\"title\">Vista de lista\u003c/div>\\n                \u003cdiv class=\"subtitle\">Lista combinada con seguidores y seguidos. Puedes cambiar entre ambas pestañas.\u003c/div>\\n            \u003c/div>\\n            \u003cdiv class=\"tabs\">\\n                \u003cbutton class=\"tab active\" data-tab=\"seguidores\">Seguidores\u003c/button>\\n                \u003cbutton class=\"tab inactive\" data-tab=\"seguidos\">Seguidos\u003c/button>\\n                \u003cbutton class=\"closebtn\" onclick=\"window.close()\">Cerrar\u003c/button>\\n            \u003c/div>\\n        \u003c/div>\\n        \u003cdiv class=\"stats\">\\n            \u003cdiv class=\"chip\">Total seguidores: ${t}\u003c/div>\\n            \u003cdiv class=\"chip\">Total seguidos: ${n}\u003c/div>\\n            \u003cdiv class=\"chip\">Total capturado: ${t+n}\u003c/div>\\n        \u003c/div>\\n        \u003cdiv class=\"searchwrap\">\\n            \u003cinput id=\"search-input\" class=\"search\" type=\"search\" placeholder=\"Buscar usuario o nombre visible...\">\\n        \u003c/div>\\n        \u003cdiv class=\"list\" id=\"list\">\u003c/div>\\n    \u003c/div>\\n    \u003cscript>\\n        const data = {\\n            seguidores: ${JSON.stringify(e.seguidores)},\\n            seguidos: ${JSON.stringify(e.seguidos)}\\n        };\\n        let activeTab = 'seguidores';\\n        const searchInput = document.getElementById('search-input');\\n        const listEl = document.getElementById('list');\\n        const tabButtons = Array.from(document.querySelectorAll('[data-tab]'));\\n\\n        function render() {\\n            const term = (searchInput.value || '').trim().toLowerCase();\\n            const lista = (data[activeTab] || []).filter(usuario => {\\n                const username = String(usuario.username || '').toLowerCase();\\n                const displayName = String(usuario.displayName || '').toLowerCase();\\n                return !term || username.includes(term) || displayName.includes(term);\\n            });\\n\\n            listEl.innerHTML = lista.length ? lista.map(usuario => {\\n                const avatarHtml = usuario.avatar\\n                    ? '\u003cimg src=\"' + usuario.avatar + '\" alt=\"' + usuario.username + '\">'\\n                    : '\u003cspan style=\"font-weight:900;color:#fbbf24;\">' + usuario.username.slice(0, 1).toUpperCase() + '\u003c/span>';\\n\\n                return '\u003ca class=\"row\" href=\"' + usuario.profileUrl + '\" target=\"_blank\" rel=\"noreferrer\" data-user=\"' + String(usuario.username).toLowerCase() + '\" data-display=\"' + String(usuario.displayName).toLowerCase() + '\">' +\\n                    '\u003cdiv class=\"avatar\">' + avatarHtml + '\u003c/div>' +\\n                    '\u003cdiv style=\"min-width:0; flex:1;\">' +\\n                        '\u003cdiv class=\"name\">' + usuario.username + '\u003c/div>' +\\n                        '\u003cdiv class=\"display\">' + usuario.displayName + '\u003c/div>' +\\n                    '\u003c/div>' +\\n                    '\u003cdiv class=\"open\">Abrir\u003c/div>' +\\n                '\u003c/a>';\\n            }).join('') : '\u003cdiv class=\"empty\">No hay resultados para mostrar.\u003c/div>';\\n        }\\n\\n        tabButtons.forEach(button => {\\n            button.addEventListener('click', () => {\\n                activeTab = button.dataset.tab;\\n                tabButtons.forEach(item => {\\n                    item.classList.toggle('active', item.dataset.tab === activeTab);\\n                    item.classList.toggle('inactive', item.dataset.tab !== activeTab);\\n                });\\n                render();\\n            });\\n        });\\n\\n        searchInput.addEventListener('input', render);\\n        render();\\n    \u003c\\/script>\\n\u003c/body>\\n\u003c/html>`}(await async function(){const e=I(),t=async e=>Promise.all(e.map(async e=>({...e,avatar:await B(e.avatar)})));return{seguidores:await t(e.seguidores),seguidos:await t(e.seguidos)}}()),n=new Blob([t],{type:\"text/html;charset=utf-8\"}),r=URL.createObjectURL(n),o=document.createElement(\"a\");o.href=r,o.download=\"seguidores-seguidos-vista.html\",document.body.appendChild(o),o.click(),document.body.removeChild(o),setTimeout(()=>URL.revokeObjectURL(r),6e4)}function z(e){const t=function(){let e=document.getElementById(\"insta-pro-viewer\");return e&&e.remove(),e=document.createElement(\"div\"),e.id=\"insta-pro-viewer\",e.style.cssText=\"\\n            position: fixed; inset: 0; z-index: 1000000; display: flex; align-items: center; justify-content: center;\\n            background: rgba(3, 7, 18, 0.78); backdrop-filter: blur(10px); padding: 20px;\\n        \",e.innerHTML='\\n            \u003cdiv style=\"width: min(1100px, 100%); height: min(90vh, 920px); background: linear-gradient(180deg, #111827 0%, #0b1220 100%); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; box-shadow: 0 25px 80px rgba(0,0,0,0.45); display: flex; flex-direction: column; overflow: hidden; color: #e5e7eb;\">\\n                \u003cdiv style=\"display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02);\">\\n                    \u003cdiv>\\n                        \u003cdiv style=\"font-size: 1.15rem; font-weight: 800; color: #fbbf24;\">Vista de lista\u003c/div>\\n                        \u003cdiv id=\"viewer-summary\" style=\"font-size: 0.8rem; color: #94a3b8; margin-top: 4px;\">Seguidores y seguidos con imagen y nombre\u003c/div>\\n                    \u003c/div>\\n                    \u003cdiv style=\"display: flex; align-items: center; gap: 10px;\">\\n                        \u003cbutton id=\"viewer-tab-seguidores\" style=\"background: #2563eb; color: #fff; border: none; padding: 10px 14px; border-radius: 999px; font-weight: 700; cursor: pointer;\">Seguidores\u003c/button>\\n                        \u003cbutton id=\"viewer-tab-seguidos\" style=\"background: rgba(255,255,255,0.06); color: #e5e7eb; border: 1px solid rgba(255,255,255,0.12); padding: 10px 14px; border-radius: 999px; font-weight: 700; cursor: pointer;\">Seguidos\u003c/button>\\n                        \u003cbutton id=\"viewer-close\" style=\"background: rgba(239,68,68,0.12); color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); padding: 10px 14px; border-radius: 999px; font-weight: 700; cursor: pointer;\">Cerrar\u003c/button>\\n                    \u003c/div>\\n                \u003c/div>\\n                \u003cdiv id=\"viewer-stats\" style=\"display: flex; gap: 12px; padding: 14px 20px; flex-wrap: wrap; color: #cbd5e1; font-size: 0.9rem;\">\\n                    \u003cdiv id=\"viewer-total\" style=\"background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 8px 12px; border-radius: 12px;\">Total: 0\u003c/div>\\n                    \u003cdiv id=\"viewer-current\" style=\"background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 8px 12px; border-radius: 12px;\">Mostrando: 0\u003c/div>\\n                \u003c/div>\\n                \u003cdiv style=\"padding: 0 20px 16px;\">\\n                    \u003cinput id=\"viewer-search\" type=\"search\" placeholder=\"Buscar usuario o nombre visible...\" style=\"width: 100%; padding: 12px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #f8fafc; outline: none;\">\\n                \u003c/div>\\n                \u003cdiv id=\"viewer-list\" style=\"flex: 1; overflow: auto; padding: 0 20px 20px;\">\u003c/div>\\n            \u003c/div>\\n        ',document.body.appendChild(e),e}(),n=I(),r=\"combinada\"===e;let o=r?\"seguidores\":e;const i=n.seguidores.length,a=n.seguidos.length,s=i+a,d=t.querySelector(\"#viewer-list\"),l=t.querySelector(\"#viewer-total\"),c=t.querySelector(\"#viewer-current\"),u=t.querySelector(\"#viewer-summary\"),p=t.querySelector(\"#viewer-tab-seguidores\"),g=t.querySelector(\"#viewer-tab-seguidos\"),b=t.querySelector(\"#viewer-search\"),m=()=>{const t=r?\"seguidores\"===o?n.seguidores:n.seguidos:\"seguidores\"===e?n.seguidores:n.seguidos,m=(b.value||\"\").trim().toLowerCase(),f=t.filter(e=>{const t=String(e.username||\"\").toLowerCase(),n=String(e.displayName||\"\").toLowerCase();return!m||t.includes(m)||n.includes(m)});l.innerText=r?`Total seguidores: ${i} | seguidos: ${a}`:`Total capturado: ${s}`,c.innerText=r?`Mostrando ${o}: ${f.length}`:`Mostrando ${e}: ${f.length}`,u.innerText=r?\"Ahora estás viendo la lista combinada. Puedes cambiar entre seguidores y seguidos.\":\"seguidores\"===e?\"Ahora estás viendo la lista de seguidores con avatar y nombre visible\":\"Ahora estás viendo la lista de seguidos con avatar y nombre visible\",p.style.background=(r?\"seguidores\"===o:\"seguidores\"===e)?\"#2563eb\":\"rgba(255,255,255,0.06)\",p.style.border=(r?\"seguidores\"===o:\"seguidores\"===e)?\"none\":\"1px solid rgba(255,255,255,0.12)\",g.style.background=(r?\"seguidos\"===o:\"seguidos\"===e)?\"#7c3aed\":\"rgba(255,255,255,0.06)\",g.style.border=(r?\"seguidos\"===o:\"seguidos\"===e)?\"none\":\"1px solid rgba(255,255,255,0.12)\",f.length?d.innerHTML=f.map(e=>`\\n                \u003ca href=\"${e.profileUrl}\" target=\"_blank\" rel=\"noreferrer\" style=\"display: flex; align-items: center; gap: 14px; padding: 14px 16px; margin-bottom: 10px; border-radius: 16px; text-decoration: none; color: inherit; background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 24px rgba(0,0,0,0.16);\">\\n                    \u003cdiv style=\"width: 56px; height: 56px; border-radius: 50%; overflow: hidden; flex: 0 0 auto; background: radial-gradient(circle at top left, rgba(251,191,36,0.38), rgba(59,130,246,0.2)); display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,0.14);\">\\n                        ${e.avatar?`\u003cimg src=\"${e.avatar}\" alt=\"${e.username}\" style=\"width: 100%; height: 100%; object-fit: cover;\">`:`\u003cspan style=\"font-weight: 900; color: #fbbf24;\">${e.username.slice(0,1).toUpperCase()}\u003c/span>`}\\n                    \u003c/div>\\n                    \u003cdiv style=\"min-width: 0; flex: 1;\">\\n                        \u003cdiv style=\"font-size: 1rem; font-weight: 800; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">${e.username}\u003c/div>\\n                        \u003cdiv style=\"font-size: 0.86rem; color: #cbd5e1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px;\">${e.displayName}\u003c/div>\\n                    \u003c/div>\\n                    \u003cdiv style=\"font-size: 0.8rem; color: #94a3b8; font-weight: 700;\">Abrir\u003c/div>\\n                \u003c/a>\\n            `).join(\"\"):d.innerHTML='\\n                \u003cdiv style=\"padding: 26px; text-align: center; color: #94a3b8; border: 1px dashed rgba(255,255,255,0.12); border-radius: 16px; margin-top: 10px;\">\\n                    No hay resultados para mostrar.\\n                \u003c/div>\\n            '};m(),b.addEventListener(\"input\",m),p.onclick=()=>{r?(o=\"seguidores\",m()):z(\"seguidores\")},g.onclick=()=>{r?(o=\"seguidos\",m()):z(\"seguidos\")},t.querySelector(\"#viewer-close\").onclick=()=>t.remove()}function q(e){z(e)}function A(){const e=document.querySelector('div[role=\"dialog\"]');if(e){const t=e.querySelector('svg[aria-label=\"Cerrar\"], svg[aria-label=\"Close\"]');if(t){const e=t.closest(\"button\")||t.parentElement;e&&e.click()}}}function j(){f&&(clearInterval(f),f=null),x&&(clearTimeout(x),x=null),v&&(clearTimeout(v),v=null),h=null,y=!1,E()}function U(e,t){const n=C(t).map(e=>e.username).join(\"\\n\"),r=new Blob([n],{type:\"text/plain;charset=utf-8\"}),o=URL.createObjectURL(r),i=document.createElement(\"a\");i.href=o,i.download=e,document.body.appendChild(i),i.click(),document.body.removeChild(i),URL.revokeObjectURL(o)}function H(e){b.innerText=\"Fase: \"+(\"seguidores\"===e?\"1. Seguidores\":\"2. Seguidos\"),p.innerText=`Abriendo modal de ${e}...`,g.innerText=\"0\";(function(e){let t=!1;return document.querySelectorAll(\"a\").forEach(n=>{const r=n.getAttribute(\"href\")||\"\",o=(n.innerText||\"\").toLowerCase();(\"seguidores\"!==e||!r.includes(\"/followers/\")&&!o.includes(\"seguidor\")||t)&&(\"seguidos\"!==e||!(r.includes(\"/following/\")||o.includes(\"siguiendo\")||o.includes(\"seguidos\"))||o.includes(\"seguidor\")||t)||(n.click(),t=!0)}),t})(e)?(p.style.color=\"#34d399\",p.innerText=`Cargando ${e}...`):(p.style.color=\"#fbbf24\",p.innerText=`Abre el modal de ${e} a mano si no se abrió.`),x=setTimeout(()=>{p.innerText=`Extrayendo y haciendo scroll en ${e}...`;let t=new Set,n=new Map,o=0;h={fase:e,stableChecks:0},f=setInterval(()=>{const x=document.querySelector('div[role=\"dialog\"]');if(!x)return;if(!T())return p.style.color=\"#fbbf24\",void(p.innerText=\"⚠️ Pestaña en segundo plano: vuelve aquí para continuar el scroll.\");p.style.color=\"#34d399\",S(x);L(x).forEach(e=>n.set(e.username,e)),t=new Set(Array.from(n.keys())),g.innerText=t.size,t.size===o?(h.stableChecks++,h.stableChecks>12&&(clearInterval(f),f=null,h=null,\"seguidores\"===e?(m.seguidores=Array.from(n.values()),p.innerText=\"¡Seguidores listos! Abriendo seguidos...\",i.style.display=\"flex\",a.style.display=\"block\",A(),v=setTimeout(()=>{H(\"seguidos\")},3e3)):(m.seguidos=Array.from(n.values()),p.style.color=\"#34d399\",p.innerText=\"¡Proceso total completado con éxito!\",b.innerText=\"Finalizado\",A(),i.style.display=\"flex\",a.style.display=\"block\",s.style.display=\"block\",d.style.display=\"block\",l.style.display=\"block\",c.style.display=\"block\",u.style.display=\"block\",y=!1,function(e=\"🚀 Iniciar Programa Completo\"){r.disabled=!1,r.style.opacity=\"1\",r.style.cursor=\"pointer\",r.innerText=e}(\"🔄 Repetir Programa Completo\"),E()))):(h.stableChecks=0,o=t.size)},800)},2e3)}function N(){if(y)return;j(),i.style.display=\"none\",[a,s,d,l,c,u].forEach(e=>{e.style.display=\"none\"}),a.innerText=\"📥 Descargar Seguidores (.txt)\",s.innerText=\"📥 Descargar Seguidos (.txt)\",u.innerText=\"💾 Descargar vista web combinada\",k||(k=!0,document.addEventListener(\"visibilitychange\",()=>{if(y&&h)if(T()){h.stableChecks=0,p.style.color=\"#34d399\",p.innerText=`Extrayendo y haciendo scroll en ${h.fase}...`;const e=document.querySelector('div[role=\"dialog\"]');e&&(S(e),setTimeout(()=>S(e),150),setTimeout(()=>S(e),400))}else p.style.color=\"#fbbf24\",p.innerText=\"⚠️ Mantén esta pestaña visible. En segundo plano el navegador pausa el scroll de Instagram.\"}));const e=document.getElementById(\"insta-pro-viewer\");e&&e.remove(),m={seguidores:[],seguidos:[]},y=!0,r.disabled=!0,r.style.opacity=\"0.6\",r.style.cursor=\"not-allowed\",r.innerText=\"⏳ Ejecutando...\",p.style.color=\"#34d399\",g.innerText=\"0\",p.innerText=\"Deja esta pestaña activa mientras corre el proceso...\",async function(){if(\"wakeLock\"in navigator)try{w=await navigator.wakeLock.request(\"screen\")}catch{w=null}}(),H(\"seguidores\")}r.addEventListener(\"click\",()=>{N()}),o.addEventListener(\"click\",()=>{!function(){j();const e=document.getElementById(\"insta-pro-viewer\");e&&e.remove(),n.remove()}()}),a.addEventListener(\"click\",()=>{U(\"seguidores.txt\",m.seguidores),a.innerText=\"📥 Descargado Seguidores!\"}),s.addEventListener(\"click\",()=>{U(\"seguidos.txt\",m.seguidos),s.innerText=\"📥 Descargado Seguidos!\"}),d.addEventListener(\"click\",()=>{q(\"seguidores\")}),l.addEventListener(\"click\",()=>{q(\"seguidos\")}),c.addEventListener(\"click\",()=>{q(\"combinada\")}),u.addEventListener(\"click\",()=>{$(),u.innerText=\"💾 Vista web descargada\"})})();"</script>
-
   <script>
-    let instagramScript = '';
-
-    async function cargarScriptExtractor() {
-      const payload = document.getElementById('extractor-code');
-      if (payload && payload.textContent.trim()) {
-        return JSON.parse(payload.textContent);
-      }
-      return '';
-    }
-
-    function mostrarEstadoListo() {
-      const codeEl = document.getElementById('code');
-      if (codeEl) {
-        codeEl.textContent = 'Pulsa «Copiar Código» y pega en la consola de Instagram.';
-      }
-    }
-
-    async function initCopyPage() {
-      const copyBtn = document.getElementById('copy-btn');
-      instagramScript = await cargarScriptExtractor();
-
-      if (!instagramScript) {
-        const codeEl = document.getElementById('code');
-        if (codeEl) {
-          codeEl.textContent = 'Falta el bundle. Ejecuta: node scripts/build.js otros/tu-archivo.js';
-        }
-        return;
-      }
-
-      mostrarEstadoListo();
-      if (copyBtn) {
-        copyBtn.disabled = false;
-      }
-    }
-
-    async function copyToClipboard() {
-      if (!instagramScript) {
-        return;
-      }
-      try {
-        await navigator.clipboard.writeText(instagramScript);
-        overlayControl('show');
-      } catch (error) {
-        console.error('Failed to copy text:', error);
-      }
-    }
-
-    function overlayControl(state) {
-      const overlay = document.getElementById('overlay');
-      if (!overlay) return;
-
-      if (state === 'show') {
-        overlay.classList.add('show');
-      } else {
-        overlay.classList.remove('show');
-      }
-    }
-
-    initCopyPage();
+    (function () {
+      var isFile = location.protocol === 'file:';
+      document.querySelectorAll('[data-route]').forEach(function (link) {
+        var route = link.getAttribute('data-route');
+        link.href = isFile ? route + '/index.html' : route + '/';
+      });
+    })();
   </script>
 </body>
 </html>

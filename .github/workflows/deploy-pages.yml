@@ -20,21 +20,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Comprobar pagina Copy code
+      - name: Comprobar paginas Copy code (extraer y comparar)
         run: |
-          if ! grep -q 'id="extractor-code"' public/index.html; then
-            echo "Falta public/index.html"
-            exit 1
-          fi
-          if ! grep -q 'type="application/json">"' public/index.html; then
-            echo "public/index.html no tiene el bundle. En local ejecuta: npm run build"
-            exit 1
-          fi
+          for page in public/extraer/index.html public/comparar/index.html; do
+            if ! grep -q 'id="extractor-code"' "$page"; then
+              echo "Falta el script embebido en $page"
+              exit 1
+            fi
+            if ! grep -q 'type="application/json">"' "$page"; then
+              echo "$page no tiene el bundle. En local ejecuta: npm run build"
+              exit 1
+            fi
+          done
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: public
+
+      - name: URLs publicadas
+        run: |
+          BASE="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          echo "Extraer:  ${BASE}/extraer/"
+          echo "Comparar: ${BASE}/comparar/"
 
   deploy:
     needs: build
