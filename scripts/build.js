@@ -55,22 +55,29 @@ function leerBundleEmbebido() {
 
 function embeberEnIndexHtml(minificado) {
     const html = fs.readFileSync(indexPath, 'utf8');
-    const payload = JSON.stringify(minificado);
-    const re = /<script id="extractor-code" type="application\/json">[\s\S]*?<\/script>/;
+    const startTag = '<script id="extractor-code" type="application/json">';
+    const start = html.indexOf(startTag);
 
-    if (!re.test(html)) {
+    if (start === -1) {
         console.error('No se encontró <script id="extractor-code"> en public/index.html.');
         process.exit(1);
     }
 
-    fs.writeFileSync(
-        indexPath,
-        html.replace(
-            re,
-            `<script id="extractor-code" type="application/json">${payload}</script>`
-        ),
-        'utf8'
-    );
+    const contentStart = start + startTag.length;
+    const end = html.indexOf('</script>', contentStart);
+
+    if (end === -1) {
+        console.error('Cierre </script> del bundle no encontrado.');
+        process.exit(1);
+    }
+
+    // Evita que el HTML interprete </script> dentro del JSON (rompe la página).
+    const payload = JSON.stringify(minificado).replace(/</g, '\\u003c');
+
+    const actualizado =
+        html.slice(0, contentStart) + payload + html.slice(end);
+
+    fs.writeFileSync(indexPath, actualizado, 'utf8');
 }
 
 function resolverMinificado() {
