@@ -61,14 +61,15 @@ En la página publicada el script **no se muestra en la caja**; solo se copia co
 Tras editar el `.js` del extractor en `otros/`:
 
 ```bash
-node scripts/build.js otros/tu-archivo-extractor.js
+npm install
+npm run build
 ```
 
-(o el mismo comando con el nombre real de tu archivo, p. ej. `seguidores-seguidos-scrapper2verlista.js`)
+(o `node scripts/build.js otros/tu-archivo-extractor.js` si ya tienes `node_modules`)
+
+El build usa **Terser** (no un “minificado falso” que unía líneas y rompía comentarios `//`, dejando el script a medias en la consola).
 
 Eso minifica, guarda copia en `dist/dist.js` (local) y actualiza el bundle en `public/index.html`. Haz commit de `public/index.html` y push.
-
-`npm run build` sin argumentos solo **relee** el bundle que ya está en `index.html` (útil para refrescar la caché `dist/`).
 
 GitHub Actions publica solo la carpeta `public/` en Pages.
 
@@ -157,7 +158,7 @@ Ejemplo en [`ejemplo/javi/`](ejemplo/javi/).
 |----------|--------|
 | Copiar script (usuarios) | `https://<usuario>.github.io/<repo>/` |
 | Comparar listas | `node scripts/comparador-txt.js` |
-| Actualizar Copy code | `node scripts/build.js otros/<tu>.js` + commit `public/index.html` |
+| Actualizar Copy code | `npm run build` + commit `public/index.html` |
 | Ver estructura ejemplo | `ejemplo/` |
 | Capturas README | `images/` |
 

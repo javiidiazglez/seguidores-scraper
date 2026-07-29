@@ -7,6 +7,9 @@ otros/
 # Caché local del minificado (el bundle publicado va en public/index.html)
 dist/
 
+# Comprobación temporal de sintaxis (build)
+.build-check.js
+
 # Sistema
 .DS_Store
 Thumbs.db

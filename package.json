@@ -2,6 +2,10 @@
   "name": "seguidores-scrapper",
   "private": true,
   "scripts": {
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js otros/seguidores-seguidos-scrapper_completo.js",
+    "build:from": "node scripts/build.js"
+  },
+  "devDependencies": {
+    "terser": "^5.39.0"
   }
 }
