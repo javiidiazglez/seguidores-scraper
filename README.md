@@ -2,9 +2,11 @@
 
 Proyecto para **comparar archivos `.txt`** de **seguidores** y **seguidos** entre fechas.
 
+**Copiar el script (Copy code):** [https://javiidiazglez.github.io/seguidores-scrapper/](https://javiidiazglez.github.io/seguidores-scrapper/)
+
 ## Uso (GitHub Pages)
 
-1. Abre `https://<tu-usuario>.github.io/<nombre-repo>/`
+1. Abre **[https://javiidiazglez.github.io/seguidores-scrapper/](https://javiidiazglez.github.io/seguidores-scrapper/)**
 2. Pulsa **Copy code**
 3. En Instagram: perfil → `F12` → **Console** → pega y **Enter**
 4. Descarga los `.txt` en `scrapper/<cuenta>/...`
@@ -80,7 +82,7 @@ Activa Pages en el repo: **Settings → Pages → Build and deployment → GitHu
 1. `git add .` y revisa que **no** entren `scrapper/`, `otros/` ni `dist/` (`git status` antes del commit).
 2. `git commit` y `git push` a `main` o `master` (el workflow escucha ambas).
 3. En GitHub: **Actions** → workflow *Deploy GitHub Pages* en verde.
-4. Abre `https://<usuario>.github.io/<nombre-repo>/`, **Copy code**, pega en la consola de Instagram.
+4. Abre [https://javiidiazglez.github.io/seguidores-scrapper/](https://javiidiazglez.github.io/seguidores-scrapper/), **Copy code**, pega en la consola de Instagram.
 
 Si el workflow falla con “no tiene el bundle”, ejecuta `npm run build` en local y vuelve a commitear `public/index.html`.
 
@@ -95,11 +97,11 @@ Si el workflow falla con “no tiene el bundle”, ejecuta `npm run build` en lo
 
 ## Parte 1: Sacar los `.txt` (Copy code)
 
-**1.** Abre la página publicada, por ejemplo:
+**1.** Abre la página para copiar el código:
 
-`https://<tu-usuario>.github.io/<nombre-repo>/`
+**[https://javiidiazglez.github.io/seguidores-scrapper/](https://javiidiazglez.github.io/seguidores-scrapper/)**
 
-(en local puedes abrir `public/index.html` después de `npm run build`)
+(en local, tras `npm run build`, también puedes abrir `public/index.html`)
 
 ![Pagina copy code](images/02-consola-script.png)
 
@@ -156,7 +158,7 @@ Ejemplo en [`ejemplo/javi/`](ejemplo/javi/).
 
 | Objetivo | Dónde |
 |----------|--------|
-| Copiar script (usuarios) | `https://<usuario>.github.io/<repo>/` |
+| Copiar script (usuarios) | [https://javiidiazglez.github.io/seguidores-scrapper/](https://javiidiazglez.github.io/seguidores-scrapper/) |
 | Comparar listas | `node scripts/comparador-txt.js` |
 | Actualizar Copy code | `npm run build` + commit `public/index.html` |
 | Ver estructura ejemplo | `ejemplo/` |
