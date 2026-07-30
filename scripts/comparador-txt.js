@@ -7,11 +7,17 @@ const path = require('path');
 const readline = require('readline/promises');
 const { stdin: input, stdout: output } = require('process');
 
+const USUARIOS_OMITIR = new Set(['fonsi.100']);
+
+function esFalsoPositivo(nombre) {
+    return USUARIOS_OMITIR.has(nombre.toLowerCase());
+}
+
 function normalizarLista(texto) {
     return texto
         .split(/\r?\n/)
         .map(linea => linea.trim())
-        .filter(Boolean);
+        .filter(linea => Boolean(linea) && !esFalsoPositivo(linea));
 }
 
 async function leerLista(ruta) {

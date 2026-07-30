@@ -927,11 +927,19 @@
       },
     };
 
+    var USUARIOS_OMITIR = { 'fonsi.100': true };
+
+    function esFalsoPositivo(nombre) {
+      return USUARIOS_OMITIR[nombre.toLowerCase()] === true;
+    }
+
     function normalizarLista(texto) {
       return texto
         .split(/\r?\n/)
         .map(function (linea) { return linea.trim(); })
-        .filter(Boolean);
+        .filter(function (linea) {
+          return Boolean(linea) && !esFalsoPositivo(linea);
+        });
     }
 
     function leerLista(texto) {
