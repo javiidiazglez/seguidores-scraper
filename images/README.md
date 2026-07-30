@@ -4,6 +4,7 @@ Coloca aquí las capturas con **estos nombres** para que se vean en el `README.m
 
 | Archivo | Qué debe mostrar |
 |---------|------------------|
+| `logo.webp` | Logo del proyecto (cabecera del README) |
 | `01-perfil-instagram.png` | Perfil de Instagram abierto (antes de ejecutar el script) |
 | `02-consola-script.png` | Consola del navegador con el script pegado o ejecutado |
 | `03-panel-extractor.png` | Panel «Extractor Instagram» (botón Iniciar Programa Completo) |

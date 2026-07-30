@@ -1,20 +1,24 @@
-# Seguidores Scrapper
+<p align="center">
+  <img src="images/logo.webp" alt="Seguidores Scraper" width="220">
+</p>
+
+# Seguidores Scraper
 
 Proyecto para **comparar archivos `.txt`** de **seguidores** y **seguidos** entre fechas.
 
 **Copiar scripts (Copy code):**
 
-- **Extraer (seguidores/seguidos):** [https://javiidiazglez.github.io/seguidores-scrapper/extraer/](https://javiidiazglez.github.io/seguidores-scrapper/extraer/)
-- **Comparar (en Instagram):** [https://javiidiazglez.github.io/seguidores-scrapper/comparar/](https://javiidiazglez.github.io/seguidores-scrapper/comparar/)
+- **Extraer (seguidores/seguidos):** [https://javiidiazglez.github.io/seguidores-scraper/extraer/](https://javiidiazglez.github.io/seguidores-scraper/extraer/)
+- **Comparar (en Instagram):** [https://javiidiazglez.github.io/seguidores-scraper/comparar/](https://javiidiazglez.github.io/seguidores-scraper/comparar/)
 
-La raíz [https://javiidiazglez.github.io/seguidores-scrapper/](https://javiidiazglez.github.io/seguidores-scrapper/) muestra el menú con **extraer** y **comparar** (sin redirección automática).
+La raíz [https://javiidiazglez.github.io/seguidores-scraper/](https://javiidiazglez.github.io/seguidores-scraper/) muestra el menú con **extraer** y **comparar** (sin redirección automática).
 
 ## Uso (GitHub Pages)
 
-1. Abre **[extraer](https://javiidiazglez.github.io/seguidores-scrapper/extraer/)** o **[comparar](https://javiidiazglez.github.io/seguidores-scrapper/comparar/)** según el script que necesites
+1. Abre **[extraer](https://javiidiazglez.github.io/seguidores-scraper/extraer/)** o **[comparar](https://javiidiazglez.github.io/seguidores-scraper/comparar/)** según el script que necesites
 2. Pulsa **Copy code**
 3. En Instagram: perfil → `F12` → **Console** → pega y **Enter**
-4. Descarga los `.txt` en `scrapper/<cuenta>/...`
+4. Descarga los `.txt` en `scraper/<cuenta>/...`
 5. Compara: `node scripts/comparador-txt.js`
 
 Las capturas del tutorial van en [`images/`](images/) (ver [`images/README.md`](images/README.md)).
@@ -22,11 +26,12 @@ Las capturas del tutorial van en [`images/`](images/) (ver [`images/README.md`](
 ## Estructura del proyecto
 
 ```text
-seguidores-scrapper/
+seguidores-scraper/
 ├── scripts/
 │   ├── comparador-txt.js
 │   └── build.js
 ├── public/
+│   ├── assets/logo.ico            # Favicon del sitio (GitHub Pages)
 │   ├── index.html                 # Menú: enlaces a extraer/ y comparar/
 │   ├── extraer/index.html         # Copy code extractor (bundle embebido)
 │   └── comparar/index.html        # Copy code comparar (desde otros/comparar-minified.js)
@@ -35,7 +40,7 @@ seguidores-scrapper/
 ├── .github/workflows/             # Despliegue Pages
 ├── package.json                   # npm run build
 ├── ejemplo/
-├── scrapper/                      # gitignore
+├── scraper/                      # gitignore
 └── otros/                         # gitignore: fuentes locales (extractor, comparar-minified.js)
 ```
 
@@ -54,7 +59,7 @@ seguidores-scrapper/
 
 **Oculto para GitHub** = listado en `.gitignore`. Git **no los sube** al repo público.
 
-En tu PC **siguen existiendo** (`dist/`, `otros/`, `scrapper/`, etc.) pero Git **no los sube** si están en `.gitignore`.
+En tu PC **siguen existiendo** (`dist/`, `otros/`, `scraper/`, etc.) pero Git **no los sube** si están en `.gitignore`.
 
 Comprueba antes del push:
 
@@ -63,7 +68,7 @@ git status
 git add -n .
 ```
 
-No deben aparecer `otros/`, `scrapper/` ni `dist/`.
+No deben aparecer `otros/`, `scraper/` ni `dist/`.
 
 En la página publicada el script **no se muestra en la caja**; solo se copia con **Copy code**.
 
@@ -88,10 +93,10 @@ Activa Pages en el repo: **Settings → Pages → Build and deployment → GitHu
 
 ### Primer push (checklist)
 
-1. `git add .` y revisa que **no** entren `scrapper/`, `otros/` ni `dist/` (`git status` antes del commit).
+1. `git add .` y revisa que **no** entren `scraper/`, `otros/` ni `dist/` (`git status` antes del commit).
 2. `git commit` y `git push` a `main` o `master` (el workflow escucha ambas).
 3. En GitHub: **Actions** → workflow *Deploy GitHub Pages* en verde.
-4. Abre [extraer](https://javiidiazglez.github.io/seguidores-scrapper/extraer/) o [comparar](https://javiidiazglez.github.io/seguidores-scrapper/comparar/), **Copy code**, pega en la consola de Instagram.
+4. Abre [extraer](https://javiidiazglez.github.io/seguidores-scraper/extraer/) o [comparar](https://javiidiazglez.github.io/seguidores-scraper/comparar/), **Copy code**, pega en la consola de Instagram.
 
 Si el workflow falla con “no tiene el bundle”, ejecuta `npm run build` en local y vuelve a commitear `public/extraer/index.html` y `public/comparar/index.html`.
 
@@ -108,7 +113,7 @@ Si el workflow falla con “no tiene el bundle”, ejecuta `npm run build` en lo
 
 **1.** Abre la página para copiar el código:
 
-**[https://javiidiazglez.github.io/seguidores-scrapper/extraer/](https://javiidiazglez.github.io/seguidores-scrapper/extraer/)**
+**[https://javiidiazglez.github.io/seguidores-scraper/extraer/](https://javiidiazglez.github.io/seguidores-scraper/extraer/)**
 
 (en local, tras `npm run build`, también puedes abrir `public/extraer/index.html`)
 
@@ -131,8 +136,8 @@ Si el workflow falla con “no tiene el bundle”, ejecuta `npm run build` en lo
 **6.** Guárdalos así:
 
 ```text
-scrapper/jorge/seguidores/seguidores29JulioJorge.txt
-scrapper/jorge/seguidos/seguidos29JulioJorge.txt
+scraper/jorge/seguidores/seguidores29JulioJorge.txt
+scraper/jorge/seguidos/seguidos29JulioJorge.txt
 ```
 
 ---
@@ -145,7 +150,7 @@ node scripts/comparador-txt.js
 
 ![Comparador](images/07-comparador-terminal.png)
 
-Elige cuenta (`scrapper/<nombre>/`), luego archivo **base** y **comparación** para seguidores y para seguidos.
+Elige cuenta (`scraper/<nombre>/`), luego archivo **base** y **comparación** para seguidores y para seguidos.
 
 Ejemplo en [`ejemplo/javi/`](ejemplo/javi/).
 
@@ -167,8 +172,8 @@ Ejemplo en [`ejemplo/javi/`](ejemplo/javi/).
 
 | Objetivo | Dónde |
 |----------|--------|
-| Copiar script extraer | [https://javiidiazglez.github.io/seguidores-scrapper/extraer/](https://javiidiazglez.github.io/seguidores-scrapper/extraer/) |
-| Copiar script comparar | [https://javiidiazglez.github.io/seguidores-scrapper/comparar/](https://javiidiazglez.github.io/seguidores-scrapper/comparar/) |
+| Copiar script extraer | [https://javiidiazglez.github.io/seguidores-scraper/extraer/](https://javiidiazglez.github.io/seguidores-scraper/extraer/) |
+| Copiar script comparar | [https://javiidiazglez.github.io/seguidores-scraper/comparar/](https://javiidiazglez.github.io/seguidores-scraper/comparar/) |
 | Comparar `.txt` en terminal | `node scripts/comparador-txt.js` |
 | Actualizar Copy code | `npm run build` + commit `public/extraer/index.html` y `public/comparar/index.html` |
 | Ver estructura ejemplo | `ejemplo/` |

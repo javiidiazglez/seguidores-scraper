@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seguidores Scrapper — Comparar</title>
+  <title>Seguidores Scraper - Comparar</title>
+  <link rel="icon" href="../assets/logo.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -164,6 +165,62 @@
       opacity: 0.95;
     }
 
+    .page-action {
+      padding: 0.875rem 1.25rem;
+      width: 100%;
+      color: var(--text);
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .page-action:hover {
+      background-color: var(--surface-raised);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .page-action:active {
+      transform: translateY(1px);
+    }
+
+    .page-action svg {
+      flex-shrink: 0;
+      opacity: 0.95;
+    }
+
+    .page-action--muted {
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+    }
+
+    .page-action--back {
+      width: auto;
+      align-self: flex-start;
+      padding: 0.5rem 0.875rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      gap: 0.35rem;
+    }
+
+    .page-action--back svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .page-action--docs {
+      margin-top: 0.25rem;
+    }
+
     .confirm-overlay {
       position: fixed;
       inset: 0;
@@ -275,12 +332,19 @@
   <div class="container">
     <header>
       <div class="logo-text">
-        <span class="logo-text__main">Seguidores Scrapper</span>
-        <span class="logo-text__sub">Comparar · Instagram</span>
+        <span class="logo-text__main">Seguidores Scraper</span>
+        <span class="logo-text__sub">Comparar Seguidores - Seguidos</span>
       </div>
     </header>
 
     <div class="codeBox__wrapper">
+      <a class="page-action page-action--muted page-action--back" data-back href="../">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M19 12H5m0 0l6 6m-6-6l6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Volver
+      </a>
+
       <div class="codeBox">
         <pre><code id="code" class="status-text">Pulsa «Copiar Código» para copiar el script al portapapeles.</code></pre>
       </div>
@@ -291,6 +355,13 @@
         </svg>
         Copiar Código
       </button>
+
+      <a class="page-action page-action--docs" href="https://docs.ejemplo.com/comparar" target="_blank" rel="noopener noreferrer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Documentación
+      </a>
     </div>
   </div>
 
@@ -371,6 +442,14 @@
     }
 
     initCopyPage();
+
+    (function () {
+      var isFile = location.protocol === 'file:';
+      var backLink = document.querySelector('[data-back]');
+      if (backLink) {
+        backLink.href = isFile ? '../index.html' : '../';
+      }
+    })();
   </script>
 </body>
 </html>

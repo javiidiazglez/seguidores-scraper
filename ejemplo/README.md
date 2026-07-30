@@ -16,4 +16,4 @@ ejemplo/
 - **base**: archivo antiguo o más grande.
 - **comparacion**: archivo nuevo a contrastar.
 
-Replica la misma idea en `scrapper/<cuenta>/...`.
+Replica la misma idea en `scraper/<cuenta>/...`.

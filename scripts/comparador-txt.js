@@ -110,18 +110,18 @@ async function seleccionarArchivosPorTipo(rl, rutaCuenta, tipo) {
 }
 
 async function main() {
-    const raizScrapper = path.join(__dirname, '..', 'scrapper');
+    const raizscraper = path.join(__dirname, '..', 'scraper');
 
     try {
-        await fs.access(raizScrapper);
+        await fs.access(raizscraper);
     } catch {
-        throw new Error(`No existe la carpeta scrapper en ${formatarRuta(__dirname)}.`);
+        throw new Error(`No existe la carpeta scraper en ${formatarRuta(__dirname)}.`);
     }
 
-    const cuentas = await listarDirectorios(raizScrapper);
+    const cuentas = await listarDirectorios(raizscraper);
 
     if (!cuentas.length) {
-        throw new Error(`No hay carpetas de cuentas dentro de ${formatarRuta(raizScrapper)}.`);
+        throw new Error(`No hay carpetas de cuentas dentro de ${formatarRuta(raizscraper)}.`);
     }
 
     const rl = readline.createInterface({ input, output });
@@ -139,7 +139,7 @@ async function main() {
         );
 
         const cuenta = cuentas[indiceCuenta];
-        const rutaCuenta = path.join(raizScrapper, cuenta);
+        const rutaCuenta = path.join(raizscraper, cuenta);
 
         const seleccionSeguidores = await seleccionarArchivosPorTipo(rl, rutaCuenta, 'seguidores');
         const seleccionSeguidos = await seleccionarArchivosPorTipo(rl, rutaCuenta, 'seguidos');

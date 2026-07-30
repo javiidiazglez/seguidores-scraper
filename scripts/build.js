@@ -13,7 +13,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const root = path.join(__dirname, '..');
-const defaultSource = path.join(root, 'otros', 'seguidores-seguidos-scrapper_completo.js');
+const defaultSource = path.join(root, 'otros', 'seguidores-seguidos-scraper_completo.js');
 const compararSource = path.join(root, 'otros', 'comparar-minified.js');
 const cachePath = path.join(root, 'dist', 'dist.js');
 const extraerIndexPath = path.join(root, 'public', 'extraer', 'index.html');
@@ -153,7 +153,7 @@ function resolverMinificadoExtraer() {
         'No hay fuente ni bundle para extraer.\n' +
             '  npm install\n' +
             '  npm run build\n' +
-            'o: node scripts/build.js otros/seguidores-seguidos-scrapper_completo.js'
+            'o: node scripts/build.js otros/seguidores-seguidos-scraper_completo.js'
     );
     process.exit(1);
 }
