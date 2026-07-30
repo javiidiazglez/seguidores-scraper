@@ -109,6 +109,10 @@ async function seleccionarArchivosPorTipo(rl, rutaCuenta, tipo) {
     };
 }
 
+function formatearDiferencia(cantidad) {
+    return cantidad > 0 ? `(-${cantidad})` : '(0)';
+}
+
 async function main() {
     const raizscraper = path.join(__dirname, '..', 'scraper');
 
@@ -163,14 +167,14 @@ async function main() {
         console.log('=== Resultado seguidores ===');
         console.log('Total base:', listaSeguidoresBase.total);
         console.log('Total comparacion:', listaSeguidoresComparacion.total);
-        console.log(`Diferencia seguidores (en base y no en comparacion): (-${seguidoresNoEnComparacion.length})`);
+        console.log(`Diferencia seguidores (en base y no en comparacion): ${formatearDiferencia(seguidoresNoEnComparacion.length)}`);
         console.log(seguidoresNoEnComparacion.length ? formatearListaNumerada(seguidoresNoEnComparacion) : 'Sin diferencias.');
 
         console.log('');
         console.log('=== Resultado seguidos ===');
         console.log('Total base:', listaSeguidosBase.total);
         console.log('Total comparacion:', listaSeguidosComparacion.total);
-        console.log(`Diferencia seguidos (en base y no en comparacion): (-${seguidosNoEnComparacion.length})`);
+        console.log(`Diferencia seguidos (en base y no en comparacion): ${formatearDiferencia(seguidosNoEnComparacion.length)}`);
         console.log(seguidosNoEnComparacion.length ? formatearListaNumerada(seguidosNoEnComparacion) : 'Sin diferencias.');
     } finally {
         rl.close();

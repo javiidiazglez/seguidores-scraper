@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seguidores Scraper - Analizador</title>
+  <link rel="icon" href="../assets/logo.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0c0c;
+      --bg-glow: rgba(224, 163, 58, 0.06);
+      --surface: #161616;
+      --surface-raised: #1f1f1f;
+      --surface-inset: #121212;
+      --text: #fafafa;
+      --text-muted: #a1a1aa;
+      --text-subtle: #71717a;
+      --radius: 1.125rem;
+      --radius-sm: 0.75rem;
+      --column: min(960px, 100%);
+      --border: rgba(255, 255, 255, 0.07);
+      --border-strong: rgba(255, 255, 255, 0.12);
+      --accent: #e0a33a;
+      --accent-soft: rgba(224, 163, 58, 0.14);
+      --success: #34d399;
+      --success-soft: rgba(52, 211, 153, 0.12);
+      --error: #f87171;
+      --error-soft: rgba(248, 113, 113, 0.12);
+      --blue: #60a5fa;
+      --blue-soft: rgba(96, 165, 250, 0.12);
+      --violet: #a78bfa;
+      --violet-soft: rgba(167, 139, 250, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-weight: 400;
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, var(--bg-glow), transparent 55%),
+        var(--bg);
+      padding: 2.5rem 1.25rem 3rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .container header {
+      width: var(--column);
+      text-align: center;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .logo-text__main {
+      font-size: clamp(1.875rem, 5.5vw, 2.625rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      color: var(--text);
+    }
+
+    .logo-text__sub {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .panel {
+      width: var(--column);
+      display: flex;
+      flex-direction: column;
+      gap: 1.125rem;
+    }
+
+    .page-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      align-self: flex-start;
+      padding: 0.5rem 0.875rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .page-action:hover {
+      color: var(--text);
+      background: var(--surface-raised);
+      border-color: var(--border-strong);
+    }
+
+    .page-action svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .intro {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      padding: 1rem 1.125rem;
+      border-radius: var(--radius);
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .intro__icon {
+      flex-shrink: 0;
+      width: 2.25rem;
+      height: 2.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.625rem;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .intro__icon svg {
+      width: 1.125rem;
+      height: 1.125rem;
+    }
+
+    .intro__text {
+      margin: 0;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    .intro__text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      background: var(--surface-inset);
+      border: 1px solid var(--border);
+    }
+
+    .progress__label {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-subtle);
+      white-space: nowrap;
+    }
+
+    .progress__track {
+      flex: 1;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .progress__fill {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), #f5c563);
+      transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .progress__count {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      min-width: 2.5rem;
+      text-align: right;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .compare-grid .file-row {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .compare-grid .file-row__arrow {
+      display: none;
+    }
+
+    .compare-card {
+      border-radius: var(--radius);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .compare-card__head {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      padding: 1.125rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, transparent 100%);
+    }
+
+    .compare-card__icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .compare-card--seguidores .compare-card__icon {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .compare-card--seguidos .compare-card__icon {
+      background: var(--violet-soft);
+      color: var(--violet);
+    }
+
+    .compare-card__icon svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .compare-card__meta {
+      min-width: 0;
+    }
+
+    .compare-card__title {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .compare-card__desc {
+      margin: 0.2rem 0 0;
+      font-size: 0.8125rem;
+      color: var(--text-subtle);
+      line-height: 1.4;
+    }
+
+    .compare-card__body {
+      padding: 1.125rem 1.25rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .file-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0.625rem;
+      align-items: stretch;
+    }
+
+    .file-row__arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-subtle);
+      padding-top: 1.65rem;
+    }
+
+    .file-row__arrow svg {
+      width: 1.125rem;
+      height: 1.125rem;
+      opacity: 0.5;
+    }
+
+    .file-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-width: 0;
+    }
+
+    .file-field__label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      padding-left: 0.15rem;
+    }
+
+    .drop-zone {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-height: 4.25rem;
+      padding: 0.875rem 1rem;
+      border-radius: var(--radius-sm);
+      background: var(--surface-inset);
+      border: 1px dashed rgba(255, 255, 255, 0.14);
+      cursor: pointer;
+      transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.15s ease;
+    }
+
+    .drop-zone:hover {
+      border-color: rgba(224, 163, 58, 0.45);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .drop-zone:focus-within {
+      outline: none;
+      border-color: rgba(224, 163, 58, 0.55);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .drop-zone.is-dragover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      transform: scale(1.01);
+    }
+
+    .drop-zone.is-filled {
+      border-style: solid;
+      border-color: rgba(52, 211, 153, 0.35);
+      background: var(--success-soft);
+    }
+
+    .drop-zone.is-error {
+      border-style: solid;
+      border-color: rgba(248, 113, 113, 0.4);
+      background: var(--error-soft);
+    }
+
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .drop-zone__icon {
+      flex-shrink: 0;
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .drop-zone.is-filled .drop-zone__icon {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--success);
+    }
+
+    .drop-zone.is-error .drop-zone__icon {
+      background: rgba(248, 113, 113, 0.15);
+      color: var(--error);
+    }
+
+    .drop-zone__icon svg {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .drop-zone__content {
+      min-width: 0;
+      flex: 1;
+      pointer-events: none;
+    }
+
+    .drop-zone__title {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.35;
+    }
+
+    .drop-zone__file {
+      display: block;
+      margin-top: 0.2rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-subtle);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .drop-zone.is-filled .drop-zone__file {
+      color: var(--success);
+    }
+
+    .drop-zone.is-error .drop-zone__file {
+      color: var(--error);
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 0.25rem;
+    }
+
+    .analyze-button {
+      width: 100%;
+      padding: 0.9375rem 1.25rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      color: #111;
+      background: linear-gradient(180deg, #ecc56a 0%, var(--accent) 100%);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15) inset, 0 8px 24px rgba(224, 163, 58, 0.18);
+      transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    }
+
+    .analyze-button:hover:not(:disabled) {
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15) inset, 0 10px 28px rgba(224, 163, 58, 0.28);
+    }
+
+    .analyze-button:disabled {
+      opacity: 0.38;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .analyze-button:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    .analyze-button svg {
+      width: 1.125rem;
+      height: 1.125rem;
+    }
+
+    .status-message {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      line-height: 1.45;
+      background: var(--error-soft);
+      border: 1px solid rgba(248, 113, 113, 0.25);
+      color: #fca5a5;
+    }
+
+    .status-message.is-visible {
+      display: flex;
+    }
+
+    .status-message svg {
+      flex-shrink: 0;
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .results {
+      display: none;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .results.is-visible {
+      display: flex;
+    }
+
+    .results__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .results__grid--single {
+      grid-template-columns: 1fr;
+    }
+
+    .results__heading {
+      margin: 0.5rem 0 0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+    }
+
+    .result-card {
+      border-radius: var(--radius);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.125rem 1.25rem;
+    }
+
+    .result-card__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.875rem;
+    }
+
+    .result-card__title {
+      margin: 0;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .result-card__badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.625rem;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .result-card__badge.is-zero {
+      background: var(--success-soft);
+      color: var(--success);
+    }
+
+    .result-card__stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .result-card__chip {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--surface-inset);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.3rem 0.65rem;
+    }
+
+    .result-card__diff {
+      margin: 0 0 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .result-card__diff em {
+      font-style: normal;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .result-card__list {
+      margin: 0;
+      padding: 0.5rem;
+      list-style: none;
+      max-height: 220px;
+      overflow: auto;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid var(--border-strong);
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .result-card__list li {
+      margin: 0;
+    }
+
+    .result-card__list li + li {
+      margin-top: 0.375rem;
+    }
+
+    .result-card__link {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      width: 100%;
+      padding: 0.625rem 0.75rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      color: var(--blue);
+      font-weight: 600;
+      transition: background-color 0.15s ease, color 0.15s ease;
+      cursor: pointer;
+    }
+
+    .result-card__link:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #93c5fd;
+    }
+
+    .result-card__link:focus-visible {
+      outline: 2px solid rgba(96, 165, 250, 0.45);
+      outline-offset: 2px;
+    }
+
+    .result-card__link-index {
+      color: var(--text-subtle);
+      min-width: 1.35rem;
+      flex-shrink: 0;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .result-card__link-name {
+      min-width: 0;
+      word-break: break-all;
+    }
+
+    .result-card__empty {
+      margin: 0;
+      padding: 0.875rem;
+      text-align: center;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px dashed var(--border-strong);
+    }
+
+    .result-card.is-hidden {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .compare-grid,
+      .results__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .file-row {
+        grid-template-columns: 1fr;
+      }
+
+      .file-row__arrow {
+        padding: 0;
+        transform: rotate(90deg);
+      }
+
+      .compare-grid .file-row__arrow {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-text">
+        <span class="logo-text__main">Seguidores Scraper</span>
+        <span class="logo-text__sub">Analizador</span>
+      </div>
+    </header>
+
+    <div class="panel">
+      <a class="page-action" data-back href="../">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M19 12H5m0 0l6 6m-6-6l6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Volver
+      </a>
+
+      <div class="intro">
+        <div class="intro__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="intro__text">
+          Sube al menos un par de archivos <strong>.txt</strong> (seguidores, seguidos o ambos) y detecta qué usuarios están en la base pero ya no en la comparación.
+        </p>
+      </div>
+
+      <div class="progress" aria-live="polite">
+        <span class="progress__label">Archivos cargados</span>
+        <div class="progress__track">
+          <div class="progress__fill" id="progress-fill"></div>
+        </div>
+        <span class="progress__count" id="progress-count">0 archivos</span>
+      </div>
+
+      <div class="compare-grid">
+      <article class="compare-card compare-card--seguidores">
+        <div class="compare-card__head">
+          <div class="compare-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="compare-card__meta">
+            <h2 class="compare-card__title">Seguidores</h2>
+            <p class="compare-card__desc">Base frente a un archivo más reciente</p>
+          </div>
+        </div>
+        <div class="compare-card__body">
+          <div class="file-row">
+            <div class="file-field">
+              <span class="file-field__label">Archivo base</span>
+              <label class="drop-zone" data-slot="seguidores-base">
+                <span class="drop-zone__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span class="drop-zone__content">
+                  <span class="drop-zone__title">Selecciona el archivo grande/base de seguidores</span>
+                  <span class="drop-zone__file" data-file-label>Arrastra o pulsa para elegir</span>
+                </span>
+                <input type="file" accept=".txt,text/plain" data-input="seguidores-base">
+              </label>
+            </div>
+            <div class="file-row__arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="file-field">
+              <span class="file-field__label">A comparar</span>
+              <label class="drop-zone" data-slot="seguidores-comparacion">
+                <span class="drop-zone__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span class="drop-zone__content">
+                  <span class="drop-zone__title">Selecciona el archivo a comparar de seguidores</span>
+                  <span class="drop-zone__file" data-file-label>Arrastra o pulsa para elegir</span>
+                </span>
+                <input type="file" accept=".txt,text/plain" data-input="seguidores-comparacion">
+              </label>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="compare-card compare-card--seguidos">
+        <div class="compare-card__head">
+          <div class="compare-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M8.5 11a4 4 0 100-8 4 4 0 000 8zM20 8v6M23 11h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="compare-card__meta">
+            <h2 class="compare-card__title">Seguidos</h2>
+            <p class="compare-card__desc">Base frente a un archivo más reciente</p>
+          </div>
+        </div>
+        <div class="compare-card__body">
+          <div class="file-row">
+            <div class="file-field">
+              <span class="file-field__label">Archivo base</span>
+              <label class="drop-zone" data-slot="seguidos-base">
+                <span class="drop-zone__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span class="drop-zone__content">
+                  <span class="drop-zone__title">Selecciona el archivo grande/base de seguidos</span>
+                  <span class="drop-zone__file" data-file-label>Arrastra o pulsa para elegir</span>
+                </span>
+                <input type="file" accept=".txt,text/plain" data-input="seguidos-base">
+              </label>
+            </div>
+            <div class="file-row__arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="file-field">
+              <span class="file-field__label">A comparar</span>
+              <label class="drop-zone" data-slot="seguidos-comparacion">
+                <span class="drop-zone__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span class="drop-zone__content">
+                  <span class="drop-zone__title">Selecciona el archivo a comparar de seguidos</span>
+                  <span class="drop-zone__file" data-file-label>Arrastra o pulsa para elegir</span>
+                </span>
+                <input type="file" accept=".txt,text/plain" data-input="seguidos-comparacion">
+              </label>
+            </div>
+          </div>
+        </div>
+      </article>
+      </div>
+
+      <div class="actions">
+        <p class="status-message" id="status-message" role="alert">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span id="status-text"></span>
+        </p>
+
+        <button class="analyze-button" id="analyze-btn" type="button" disabled>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Analizar diferencias
+        </button>
+      </div>
+
+      <div class="results" id="results">
+        <h3 class="results__heading">Resultados</h3>
+
+        <div class="results__grid" id="results-grid">
+        <article class="result-card is-hidden" id="result-seguidores">
+          <div class="result-card__top">
+            <h4 class="result-card__title">Seguidores</h4>
+            <span class="result-card__badge" data-badge>—</span>
+          </div>
+          <div class="result-card__stats">
+            <span class="result-card__chip" data-stat="base">Total base: —</span>
+            <span class="result-card__chip" data-stat="comparacion">Total comparación: —</span>
+          </div>
+          <p class="result-card__diff" data-diff></p>
+          <ul class="result-card__list" data-list hidden></ul>
+          <p class="result-card__empty" data-empty hidden>Sin diferencias.</p>
+        </article>
+
+        <article class="result-card is-hidden" id="result-seguidos">
+          <div class="result-card__top">
+            <h4 class="result-card__title">Seguidos</h4>
+            <span class="result-card__badge" data-badge>—</span>
+          </div>
+          <div class="result-card__stats">
+            <span class="result-card__chip" data-stat="base">Total base: —</span>
+            <span class="result-card__chip" data-stat="comparacion">Total comparación: —</span>
+          </div>
+          <p class="result-card__diff" data-diff></p>
+          <ul class="result-card__list" data-list hidden></ul>
+          <p class="result-card__empty" data-empty hidden>Sin diferencias.</p>
+        </article>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var archivos = {
+      'seguidores-base': null,
+      'seguidores-comparacion': null,
+      'seguidos-base': null,
+      'seguidos-comparacion': null,
+    };
+
+    var PLACEHOLDER = 'Arrastra o pulsa para elegir';
+
+    var GRUPOS = {
+      seguidores: {
+        base: 'seguidores-base',
+        comparacion: 'seguidores-comparacion',
+      },
+      seguidos: {
+        base: 'seguidos-base',
+        comparacion: 'seguidos-comparacion',
+      },
+    };
+
+    function normalizarLista(texto) {
+      return texto
+        .split(/\r?\n/)
+        .map(function (linea) { return linea.trim(); })
+        .filter(Boolean);
+    }
+
+    function leerLista(texto) {
+      var lineas = normalizarLista(texto);
+      return {
+        total: lineas.length,
+        unicos: Array.from(new Set(lineas)),
+      };
+    }
+
+    function compararListas(listaOrigen, listaDestino) {
+      var setDestino = new Set(listaDestino.unicos);
+      return listaOrigen.unicos.filter(function (nombre) {
+        return !setDestino.has(nombre);
+      });
+    }
+
+    function contarArchivos() {
+      return Object.keys(archivos).filter(function (clave) {
+        return archivos[clave] !== null;
+      }).length;
+    }
+
+    function estadoGrupo(tipo) {
+      var grupo = GRUPOS[tipo];
+      var tieneBase = archivos[grupo.base] !== null;
+      var tieneComparacion = archivos[grupo.comparacion] !== null;
+
+      return {
+        completo: tieneBase && tieneComparacion,
+        parcial: tieneBase !== tieneComparacion,
+        vacio: !tieneBase && !tieneComparacion,
+      };
+    }
+
+    function paresListos() {
+      return Object.keys(GRUPOS).filter(function (tipo) {
+        return estadoGrupo(tipo).completo;
+      });
+    }
+
+    function actualizarProgreso() {
+      var count = contarArchivos();
+      var listos = paresListos();
+      var pct = (count / 4) * 100;
+      var countEl = document.getElementById('progress-count');
+
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('analyze-btn').disabled = listos.length === 0;
+
+      if (!count) {
+        countEl.textContent = '0 archivos';
+      } else if (!listos.length) {
+        countEl.textContent = count + ' archivos';
+      } else if (listos.length === 1) {
+        countEl.textContent = listos[0].charAt(0).toUpperCase() + listos[0].slice(1) + ' listo';
+      } else {
+        countEl.textContent = 'Seguidores y Seguidos Listos';
+      }
+    }
+
+    function mostrarEstado(mensaje) {
+      var el = document.getElementById('status-message');
+      var text = document.getElementById('status-text');
+      if (!mensaje) {
+        text.textContent = '';
+        el.classList.remove('is-visible');
+        return;
+      }
+      text.textContent = mensaje;
+      el.classList.add('is-visible');
+    }
+
+    function marcarZona(zona, estado, nombreArchivo) {
+      zona.classList.remove('is-filled', 'is-error', 'is-dragover');
+      var label = zona.querySelector('[data-file-label]');
+
+      if (estado === 'filled') {
+        zona.classList.add('is-filled');
+        label.textContent = nombreArchivo;
+      } else if (estado === 'error') {
+        zona.classList.add('is-error');
+        label.textContent = nombreArchivo || PLACEHOLDER;
+      } else {
+        label.textContent = PLACEHOLDER;
+      }
+    }
+
+    function asignarArchivo(clave, file) {
+      if (!file) {
+        return;
+      }
+
+      if (!file.name.toLowerCase().endsWith('.txt')) {
+        marcarZona(document.querySelector('[data-slot="' + clave + '"]'), 'error', 'Solo archivos .txt');
+        return;
+      }
+
+      var reader = new FileReader();
+      reader.onload = function () {
+        archivos[clave] = {
+          nombre: file.name,
+          contenido: String(reader.result || ''),
+        };
+
+        marcarZona(document.querySelector('[data-slot="' + clave + '"]'), 'filled', file.name);
+        mostrarEstado('');
+        actualizarProgreso();
+      };
+      reader.onerror = function () {
+        mostrarEstado('No se pudo leer «' + file.name + '».');
+      };
+      reader.readAsText(file, 'utf-8');
+    }
+
+    function configurarZona(zona) {
+      var input = zona.querySelector('input[type="file"]');
+      var clave = input.getAttribute('data-input');
+
+      input.addEventListener('change', function () {
+        asignarArchivo(clave, input.files && input.files[0]);
+      });
+
+      ['dragenter', 'dragover'].forEach(function (evento) {
+        zona.addEventListener(evento, function (event) {
+          event.preventDefault();
+          zona.classList.add('is-dragover');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach(function (evento) {
+        zona.addEventListener(evento, function (event) {
+          event.preventDefault();
+          zona.classList.remove('is-dragover');
+        });
+      });
+
+      zona.addEventListener('drop', function (event) {
+        var file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
+        asignarArchivo(clave, file);
+      });
+    }
+
+    function perfilInstagram(usuario) {
+      var limpio = String(usuario || '').trim().replace(/^@+/, '');
+      return 'https://www.instagram.com/' + encodeURIComponent(limpio) + '/';
+    }
+
+    function renderResultado(tipo, listaBase, listaComparacion, diferencias) {
+      var card = document.getElementById('result-' + tipo);
+      var badge = card.querySelector('[data-badge]');
+
+      card.querySelector('[data-stat="base"]').textContent = 'Total base: ' + listaBase.total;
+      card.querySelector('[data-stat="comparacion"]').textContent = 'Total comparación: ' + listaComparacion.total;
+      badge.textContent = diferencias.length > 0 ? '-' + diferencias.length : '0';
+      badge.classList.toggle('is-zero', diferencias.length === 0);
+      card.querySelector('[data-diff]').innerHTML =
+        'Usuarios en base que no están en comparación: <em>' + diferencias.length + '</em>';
+
+      var listEl = card.querySelector('[data-list]');
+      var emptyEl = card.querySelector('[data-empty]');
+
+      if (diferencias.length) {
+        listEl.innerHTML = diferencias.map(function (nombre, indice) {
+          var usuario = escapeHtml(nombre);
+          var url = escapeHtml(perfilInstagram(nombre));
+          return '<li><a class="result-card__link" href="' + url + '" target="_blank" rel="noopener noreferrer">' +
+            '<span class="result-card__link-index">' + (indice + 1) + '.</span>' +
+            '<span class="result-card__link-name">' + usuario + '</span></a></li>';
+        }).join('');
+        listEl.hidden = false;
+        emptyEl.hidden = true;
+      } else {
+        listEl.innerHTML = '';
+        listEl.hidden = true;
+        emptyEl.hidden = false;
+      }
+    }
+
+    function escapeHtml(texto) {
+      return String(texto)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function validarSeleccion() {
+      var listos = paresListos();
+
+      if (!listos.length) {
+        mostrarEstado('Completa al menos un par: base y comparación de seguidores o de seguidos.');
+        return false;
+      }
+
+      for (var tipo in GRUPOS) {
+        if (!GRUPOS.hasOwnProperty(tipo)) {
+          continue;
+        }
+
+        var estado = estadoGrupo(tipo);
+
+        if (estado.parcial) {
+          mostrarEstado('En ' + tipo + ' falta el archivo base o el de comparación.');
+          return false;
+        }
+
+        if (estado.completo) {
+          var grupo = GRUPOS[tipo];
+          var base = archivos[grupo.base];
+          var comparacion = archivos[grupo.comparacion];
+
+          if (base.nombre === comparacion.nombre && base.contenido === comparacion.contenido) {
+            mostrarEstado('El archivo base y el de comparación deben ser distintos en ' + tipo + '.');
+            return false;
+          }
+        }
+      }
+
+      return true;
+    }
+
+    function analizar() {
+      if (!validarSeleccion()) {
+        return;
+      }
+
+      var analizados = 0;
+
+      Object.keys(GRUPOS).forEach(function (tipo) {
+        var card = document.getElementById('result-' + tipo);
+
+        if (!estadoGrupo(tipo).completo) {
+          card.classList.add('is-hidden');
+          return;
+        }
+
+        var grupo = GRUPOS[tipo];
+        var listaBase = leerLista(archivos[grupo.base].contenido);
+        var listaComparacion = leerLista(archivos[grupo.comparacion].contenido);
+        var diff = compararListas(listaBase, listaComparacion);
+
+        renderResultado(tipo, listaBase, listaComparacion, diff);
+        card.classList.remove('is-hidden');
+        analizados++;
+      });
+
+      if (analizados > 0) {
+        document.getElementById('results-grid').classList.toggle('results__grid--single', analizados === 1);
+        document.getElementById('results').classList.add('is-visible');
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      mostrarEstado('');
+    }
+
+    document.querySelectorAll('.drop-zone').forEach(configurarZona);
+    document.getElementById('analyze-btn').addEventListener('click', analizar);
+    actualizarProgreso();
+
+    (function () {
+      var isFile = location.protocol === 'file:';
+      var backLink = document.querySelector('[data-back]');
+      if (backLink) {
+        backLink.href = isFile ? '../index.html' : '../';
+      }
+    })();
+  </script>
+</body>
+</html>

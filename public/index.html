@@ -119,9 +119,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 0.5rem;
       text-decoration: none;
       transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .hub__link-inner {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 0.625rem;
+      line-height: 1;
     }
 
     .hub__link:hover {
@@ -134,29 +142,19 @@
     }
 
     .hub__link svg {
+      display: block;
       flex-shrink: 0;
-      opacity: 0.95;
+      width: 1.375rem;
+      height: 1.375rem;
+    }
+
+    .hub__link-label {
+      display: block;
+      white-space: nowrap;
     }
 
     .hub__back-spacer {
-      display: flex;
-      align-items: center;
-      align-self: flex-start;
-      gap: 0.35rem;
-      padding: 0.5rem 0.875rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      line-height: 1;
-      visibility: hidden;
-      pointer-events: none;
-      user-select: none;
-      border: 1px solid transparent;
-    }
-
-    .hub__back-spacer svg {
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
+      display: none;
     }
   </style>
 </head>
@@ -165,7 +163,7 @@
     <header>
       <div class="logo-text">
         <span class="logo-text__main">Seguidores Scraper</span>
-        <span class="logo-text__sub">Instagram</span>
+        <span class="logo-text__sub">Seguidores - Seguidos</span>
       </div>
     </header>
 
@@ -177,20 +175,33 @@
         Volver
       </span>
 
-      <p class="hub__hint">Elige una ruta para copiar el script en la consola de Instagram.</p>
+      <p class="hub__hint">Elige una ruta: extraer, comparar o analizar.</p>
 
       <a class="hub__link" data-route="extraer" href="extraer/">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 3v12m0 0l4-4m-4 4l-4-4M4 21h16" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Extraer Seguidores - Seguidos
+        <span class="hub__link-inner">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 3v12m0 0l4-4m-4 4l-4-4M4 21h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="hub__link-label">Extraer</span>
+        </span>
       </a>
 
       <a class="hub__link" data-route="comparar" href="comparar/">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M7 7h10M7 12h6M7 17h8M5 4h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        Comparar Seguidores - Seguidos
+        <span class="hub__link-inner">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M7 7h10M7 12h6M7 17h8M5 4h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="hub__link-label">Comparar</span>
+        </span>
+      </a>
+
+      <a class="hub__link" data-route="analizador" href="analizador/">
+        <span class="hub__link-inner">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="hub__link-label">Analizador</span>
+        </span>
       </a>
     </nav>
   </div>
