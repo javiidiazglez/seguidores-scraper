@@ -8,14 +8,14 @@ Proyecto para **comparar archivos `.txt`** de **seguidores** y **seguidos** entr
 
 **Copiar scripts (Copy code):**
 
-- **Extraer (seguidores/seguidos):** [https://javiidiazglez.github.io/seguidores-scraper/extraer/](https://javiidiazglez.github.io/seguidores-scraper/extraer/)
-- **Comparar (en Instagram):** [https://javiidiazglez.github.io/seguidores-scraper/comparar/](https://javiidiazglez.github.io/seguidores-scraper/comparar/)
+- **Extraer (seguidores/seguidos):** [https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/](https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/)
+- **Comparar (en Instagram):** [https://josejavierdiazgonzalez.github.io/seguidores-scraper/comparar/](https://josejavierdiazgonzalez.github.io/seguidores-scraper/comparar/)
 
-La raíz [https://javiidiazglez.github.io/seguidores-scraper/](https://javiidiazglez.github.io/seguidores-scraper/) muestra el menú con **extraer** y **comparar** (sin redirección automática).
+La raíz [https://josejavierdiazgonzalez.github.io/seguidores-scraper/](https://josejavierdiazgonzalez.github.io/seguidores-scraper/) muestra el menú con **extraer** y **comparar** (sin redirección automática).
 
 ## Uso (GitHub Pages)
 
-1. Abre **[extraer](https://javiidiazglez.github.io/seguidores-scraper/extraer/)** o **[comparar](https://javiidiazglez.github.io/seguidores-scraper/comparar/)** según el script que necesites
+1. Abre **[extraer](https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/)** o **[comparar](https://josejavierdiazgonzalez.github.io/seguidores-scraper/comparar/)** según el script que necesites
 2. Pulsa **Copy code**
 3. En Instagram: perfil → `F12` → **Console** → pega y **Enter**
 4. Descarga los `.txt` en `scraper/<cuenta>/`
@@ -96,7 +96,7 @@ Activa Pages en el repo: **Settings → Pages → Build and deployment → GitHu
 1. `git add .` y revisa que **no** entren `scraper/`, `otros/` ni `dist/` (`git status` antes del commit).
 2. `git commit` y `git push` a `main` o `master` (el workflow escucha ambas).
 3. En GitHub: **Actions** → workflow *Deploy GitHub Pages* en verde.
-4. Abre [extraer](https://javiidiazglez.github.io/seguidores-scraper/extraer/) o [comparar](https://javiidiazglez.github.io/seguidores-scraper/comparar/), **Copy code**, pega en la consola de Instagram.
+4. Abre [extraer](https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/) o [comparar](https://josejavierdiazgonzalez.github.io/seguidores-scraper/comparar/), **Copy code**, pega en la consola de Instagram.
 
 Si el workflow falla con “no tiene el bundle”, ejecuta `npm run build` en local y vuelve a commitear `public/extraer/index.html` y `public/comparar/index.html`.
 
@@ -113,7 +113,7 @@ Si el workflow falla con “no tiene el bundle”, ejecuta `npm run build` en lo
 
 **1.** Abre la página para copiar el código:
 
-**[https://javiidiazglez.github.io/seguidores-scraper/extraer/](https://javiidiazglez.github.io/seguidores-scraper/extraer/)**
+**[https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/](https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/)**
 
 (en local, tras `npm run build`, también puedes abrir `public/extraer/index.html`)
 
@@ -172,8 +172,8 @@ Ejemplo en [`ejemplo/javi/`](ejemplo/javi/).
 
 | Objetivo | Dónde |
 |----------|--------|
-| Copiar script extraer | [https://javiidiazglez.github.io/seguidores-scraper/extraer/](https://javiidiazglez.github.io/seguidores-scraper/extraer/) |
-| Copiar script comparar | [https://javiidiazglez.github.io/seguidores-scraper/comparar/](https://javiidiazglez.github.io/seguidores-scraper/comparar/) |
+| Copiar script extraer | [https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/](https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/) |
+| Copiar script comparar | [https://josejavierdiazgonzalez.github.io/seguidores-scraper/comparar/](https://josejavierdiazgonzalez.github.io/seguidores-scraper/comparar/) |
 | Comparar `.txt` en terminal | `npm run comparador` |
 | Actualizar Copy code | `npm run build` + commit `public/extraer/index.html` y `public/comparar/index.html` |
 | Ver estructura ejemplo | `ejemplo/` |
