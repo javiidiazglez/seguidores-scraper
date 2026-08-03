@@ -10,14 +10,14 @@ const tag = `v${version}`;
 const repo = process.env.GITHUB_REPOSITORY || 'owner/seguidores-scraper';
 
 const SECTIONS = [
-    { key: 'feat', title: 'Features' },
-    { key: 'fix', title: 'Fixes' },
+    { key: 'feat', title: 'New' },
+    { key: 'fix', title: 'Fix' },
     { key: 'docs', title: 'Documentation' },
     { key: 'refactor', title: 'Refactoring' },
     { key: 'style', title: 'Style' },
     { key: 'ci', title: 'CI' },
     { key: 'chore', title: 'Maintenance' },
-    { key: 'other', title: 'Other changes' },
+    { key: 'other', title: 'Other' },
 ];
 
 function run(command) {
@@ -74,18 +74,6 @@ function parseSubject(subject) {
     };
 }
 
-function buildSummary(commits) {
-    const preferred = commits.find(item => item.type === 'feat' || item.type === 'fix');
-    const pick = preferred || commits[0];
-
-    if (!pick) {
-        return `Release **seguidores-scraper ${tag}** — GitHub Pages update.`;
-    }
-
-    const label = pick.type === 'feat' ? 'Feature' : pick.type === 'fix' ? 'Fix' : 'Update';
-    return `Release **seguidores-scraper ${tag}** — ${label}: ${pick.description}.`;
-}
-
 function buildBody(commits, previousTag) {
     const grouped = Object.fromEntries(SECTIONS.map(section => [section.key, []]));
 
@@ -95,7 +83,7 @@ function buildBody(commits, previousTag) {
         grouped[bucket].push(parsed.description);
     }
 
-    const lines = [buildSummary(commits.map(subject => parseSubject(subject))), ''];
+    const lines = [];
 
     for (const section of SECTIONS) {
         const items = grouped[section.key];
@@ -103,11 +91,15 @@ function buildBody(commits, previousTag) {
             continue;
         }
 
-        lines.push(`### ${section.title}`, '');
+        lines.push(`## ${section.title}:`, '');
         for (const item of items) {
             lines.push(`- ${item}`);
         }
         lines.push('');
+    }
+
+    if (!lines.length) {
+        lines.push('## Maintenance:', '', '- GitHub Pages update.', '');
     }
 
     const compareBase = previousTag || tag;

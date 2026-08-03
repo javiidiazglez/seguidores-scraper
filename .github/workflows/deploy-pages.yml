@@ -15,7 +15,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      pages: ${{ steps.filter.outputs.pages }}
+      release: ${{ steps.filter.outputs.release }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            pages:
+              - 'public/**'
+              - '.github/workflows/deploy-pages.yml'
+            release:
+              - 'package.json'
+
   build:
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.pages == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -46,7 +65,8 @@ jobs:
           echo "Analizador: ${BASE}/analizador/"
 
   deploy:
-    needs: build
+    needs: [changes, build]
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.pages == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -57,7 +77,8 @@ jobs:
         uses: actions/deploy-pages@v5
 
   release:
-    needs: deploy
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.release == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
