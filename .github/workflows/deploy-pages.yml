@@ -79,11 +79,15 @@ jobs:
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Generar notas del release
+        id: notes
+        run: node scripts/generate-release-notes.js > release-notes.md
+
       - name: Crear tag y GitHub Release
         if: steps.check.outputs.exists == 'false'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.version }}
-          name: v${{ steps.version.outputs.version }}
-          generate_release_notes: true
+          name: seguidores-scraper v${{ steps.version.outputs.version }}
+          body_path: release-notes.md
           make_latest: true
