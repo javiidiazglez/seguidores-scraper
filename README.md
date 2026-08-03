@@ -18,8 +18,8 @@ La raíz [https://javiidiazglez.github.io/seguidores-scraper/](https://javiidiaz
 1. Abre **[extraer](https://javiidiazglez.github.io/seguidores-scraper/extraer/)** o **[comparar](https://javiidiazglez.github.io/seguidores-scraper/comparar/)** según el script que necesites
 2. Pulsa **Copy code**
 3. En Instagram: perfil → `F12` → **Console** → pega y **Enter**
-4. Descarga los `.txt` en `scraper/<cuenta>/...`
-5. Compara: `node scripts/comparador-txt.js`
+4. Descarga los `.txt` en `scraper/<cuenta>/`
+5. Compara: `npm run comparador`
 
 Las capturas del tutorial van en [`images/`](images/) (ver [`images/README.md`](images/README.md)).
 
@@ -38,7 +38,7 @@ seguidores-scraper/
 ├── dist/                          # Solo local (gitignore): caché de dist/dist.js
 ├── images/                        # Capturas del README (no van a Pages)
 ├── .github/workflows/             # Despliegue Pages
-├── package.json                   # npm run build
+├── package.json                   # npm run build, npm run comparador
 ├── ejemplo/
 ├── scraper/                      # gitignore
 └── otros/                         # gitignore: fuentes locales (extractor, comparar-minified.js)
@@ -133,11 +133,11 @@ Si el workflow falla con “no tiene el bundle”, ejecuta `npm run build` en lo
 
 ![Panel finalizado](images/05-panel-finalizado.png)
 
-**6.** Guárdalos así:
+**6.** Guárdalos en la misma carpeta de la cuenta. El nombre debe empezar por `seguidores` o `seguidos`:
 
 ```text
-scraper/jorge/seguidores/seguidores29JulioJorge.txt
-scraper/jorge/seguidos/seguidos29JulioJorge.txt
+scraper/jorge/seguidores29JulioJorge.txt
+scraper/jorge/seguidos29JulioJorge.txt
 ```
 
 ---
@@ -145,12 +145,12 @@ scraper/jorge/seguidos/seguidos29JulioJorge.txt
 ## Parte 2: Comparar `.txt`
 
 ```bash
-node scripts/comparador-txt.js
+npm run comparador
 ```
 
 ![Comparador](images/07-comparador-terminal.png)
 
-Elige cuenta (`scraper/<nombre>/`), luego archivo **base** y **comparación** para seguidores y para seguidos.
+Elige cuenta (`scraper/<nombre>/`), luego archivo **base** y **comparación** para seguidores y para seguidos. Solo verás archivos cuyo nombre empiece por `seguidores` o `seguidos`, según corresponda.
 
 Ejemplo en [`ejemplo/javi/`](ejemplo/javi/).
 
@@ -174,7 +174,7 @@ Ejemplo en [`ejemplo/javi/`](ejemplo/javi/).
 |----------|--------|
 | Copiar script extraer | [https://javiidiazglez.github.io/seguidores-scraper/extraer/](https://javiidiazglez.github.io/seguidores-scraper/extraer/) |
 | Copiar script comparar | [https://javiidiazglez.github.io/seguidores-scraper/comparar/](https://javiidiazglez.github.io/seguidores-scraper/comparar/) |
-| Comparar `.txt` en terminal | `node scripts/comparador-txt.js` |
+| Comparar `.txt` en terminal | `npm run comparador` |
 | Actualizar Copy code | `npm run build` + commit `public/extraer/index.html` y `public/comparar/index.html` |
 | Ver estructura ejemplo | `ejemplo/` |
 | Capturas README | `images/` |

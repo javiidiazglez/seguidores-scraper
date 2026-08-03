@@ -52,10 +52,29 @@ async function listarDirectorios(basePath) {
         .sort((a, b) => a.localeCompare(b, 'es'));
 }
 
-async function listarTxts(carpeta) {
+function tipoDeArchivo(nombreArchivo) {
+    const nombre = path.basename(nombreArchivo).toLowerCase();
+
+    if (!nombre.endsWith('.txt')) {
+        return null;
+    }
+
+    // seguidores antes que seguidos: «seguidores…» también empieza por «seguidos»
+    if (nombre.startsWith('seguidores')) {
+        return 'seguidores';
+    }
+
+    if (nombre.startsWith('seguidos')) {
+        return 'seguidos';
+    }
+
+    return null;
+}
+
+async function listarTxtsPorTipo(carpeta, tipo) {
     const entries = await fs.readdir(carpeta, { withFileTypes: true });
     return entries
-        .filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.txt'))
+        .filter(entry => entry.isFile() && tipoDeArchivo(entry.name) === tipo)
         .map(entry => entry.name)
         .sort((a, b) => a.localeCompare(b, 'es'));
 }
@@ -85,15 +104,17 @@ async function preguntarIndiceValido(rl, mensaje, totalOpciones, indiceBloqueado
 }
 
 async function seleccionarArchivosPorTipo(rl, rutaCuenta, tipo) {
-    const rutaTipo = path.join(rutaCuenta, tipo);
-    const archivos = await listarTxts(rutaTipo);
+    const archivos = await listarTxtsPorTipo(rutaCuenta, tipo);
 
     if (archivos.length < 2) {
-        throw new Error(`En ${formatarRuta(rutaTipo)} se necesitan al menos 2 archivos .txt para comparar.`);
+        throw new Error(
+            `En ${formatarRuta(rutaCuenta)} se necesitan al menos 2 archivos .txt de ${tipo} ` +
+            `(nombre que empiece por «${tipo}»).`
+        );
     }
 
     console.log('');
-    console.log(`Archivos disponibles en ${tipo}:`);
+    console.log(`Archivos disponibles de ${tipo}:`);
     console.log(imprimirOpciones(archivos));
 
     const indiceBase = await preguntarIndiceValido(
@@ -110,13 +131,29 @@ async function seleccionarArchivosPorTipo(rl, rutaCuenta, tipo) {
     );
 
     return {
-        base: path.join(rutaTipo, archivos[indiceBase]),
-        comparacion: path.join(rutaTipo, archivos[indiceComparacion]),
+        base: path.join(rutaCuenta, archivos[indiceBase]),
+        comparacion: path.join(rutaCuenta, archivos[indiceComparacion]),
     };
 }
 
 function formatearDiferencia(cantidad) {
     return cantidad > 0 ? `(-${cantidad})` : '(0)';
+}
+
+function formatearResumenDiferencia(totalBase, totalComparacion, cantidadDiferencia) {
+    if (cantidadDiferencia === 0) {
+        return `Sin Diferencias. ${totalBase} = ${totalComparacion}: (0)`;
+    }
+
+    if (totalBase > totalComparacion) {
+        return `Baja de ${totalBase} a ${totalComparacion}: ${formatearDiferencia(cantidadDiferencia)}`;
+    }
+
+    if (totalBase < totalComparacion) {
+        return `Sube de ${totalBase} a ${totalComparacion}: ${formatearDiferencia(cantidadDiferencia)}`;
+    }
+
+    return `${totalBase} = ${totalComparacion}: ${formatearDiferencia(cantidadDiferencia)}`;
 }
 
 async function main() {
@@ -171,17 +208,29 @@ async function main() {
 
         console.log('');
         console.log('=== Resultado seguidores ===');
-        console.log('Total base:', listaSeguidoresBase.total);
-        console.log('Total comparacion:', listaSeguidoresComparacion.total);
-        console.log(`Diferencia seguidores (en base y no en comparacion): ${formatearDiferencia(seguidoresNoEnComparacion.length)}`);
-        console.log(seguidoresNoEnComparacion.length ? formatearListaNumerada(seguidoresNoEnComparacion) : 'Sin diferencias.');
+        console.log('Base:', listaSeguidoresBase.total);
+        console.log('Comparacion:', listaSeguidoresComparacion.total);
+        console.log(formatearResumenDiferencia(
+            listaSeguidoresBase.total,
+            listaSeguidoresComparacion.total,
+            seguidoresNoEnComparacion.length
+        ));
+        if (seguidoresNoEnComparacion.length) {
+            console.log(formatearListaNumerada(seguidoresNoEnComparacion));
+        }
 
         console.log('');
         console.log('=== Resultado seguidos ===');
-        console.log('Total base:', listaSeguidosBase.total);
-        console.log('Total comparacion:', listaSeguidosComparacion.total);
-        console.log(`Diferencia seguidos (en base y no en comparacion): ${formatearDiferencia(seguidosNoEnComparacion.length)}`);
-        console.log(seguidosNoEnComparacion.length ? formatearListaNumerada(seguidosNoEnComparacion) : 'Sin diferencias.');
+        console.log('Base:', listaSeguidosBase.total);
+        console.log('Comparacion:', listaSeguidosComparacion.total);
+        console.log(formatearResumenDiferencia(
+            listaSeguidosBase.total,
+            listaSeguidosComparacion.total,
+            seguidosNoEnComparacion.length
+        ));
+        if (seguidosNoEnComparacion.length) {
+            console.log(formatearListaNumerada(seguidosNoEnComparacion));
+        }
     } finally {
         rl.close();
     }

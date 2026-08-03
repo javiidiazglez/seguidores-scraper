@@ -1,9 +1,10 @@
 {
   "name": "seguidores-scraper",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "private": true,
   "scripts": {
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "comparador": "node scripts/comparador-txt.js"
   },
   "devDependencies": {
     "terser": "^5.39.0"

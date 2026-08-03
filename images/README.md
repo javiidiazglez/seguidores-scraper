@@ -11,7 +11,7 @@ Coloca aquí las capturas con **estos nombres** para que se vean en el `README.m
 | `04-scroll-seguidores.png` | Modal de seguidores con el contador subiendo |
 | `05-panel-finalizado.png` | Panel al terminar (descargas y vistas web) |
 | `06-vista-lista-web.png` | Vista web con avatares (opcional) |
-| `07-comparador-terminal.png` | Terminal ejecutando `node scripts/comparador-txt.js` |
+| `07-comparador-terminal.png` | Terminal ejecutando `npm run comparador` |
 | `08-resultado-comparador.png` | Salida con la diferencia entre dos `.txt` |
 
 Formato recomendado: **PNG** o **JPG**, nombres en minúsculas como en la tabla.
