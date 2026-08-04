@@ -9,11 +9,11 @@
 </p>
 
 <p align="center">
-  <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/">Extraer</a>
+  <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/" target="_blank" rel="noopener noreferrer">Extraer</a>
   ·
-  <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/comparar/">Comparar</a>
+  <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/comparar/" target="_blank" rel="noopener noreferrer">Comparar</a>
   ·
-  <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/analizador/">Analizador</a>
+  <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/analizador/" target="_blank" rel="noopener noreferrer">Analizador</a>
 </p>
 
 ---
@@ -22,7 +22,7 @@
 
 ## 1. Copiar código
 
-Entra en [Extraer](https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/), pulsa **Copy code** y copia el script.
+Entra en <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/" target="_blank" rel="noopener noreferrer">Extraer</a>, pulsa **Copy code** y copia el script.
 
 <p align="center">
   <img src="images/01-extraer-copy-code.gif" alt="Pagina extraer con Copy code" width="480">
@@ -54,7 +54,7 @@ Guárdalos en `scraper/<cuenta>/` (carpeta local, una por perfil). Más detalle 
 
 ## 4. Analizador
 
-En [Analizador](https://josejavierdiazgonzalez.github.io/seguidores-scraper/analizador/), sube los archivos y elige cuál es la **base** y cuál la **comparación** (seguidores y seguidos por separado).
+En <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/analizador/" target="_blank" rel="noopener noreferrer">Analizador</a>, sube los archivos y elige cuál es la **base** y cuál la **comparación** (seguidores y seguidos por separado).
 
 <p align="center">
   <img src="images/04-analizador-comparacion-1.png" alt="Analizador: comparacion de seguidores y seguidos" width="747">
@@ -66,7 +66,7 @@ Alternativa en terminal: [`npm run comparador`](#comparador-en-terminal).
 
 > ⚠️ **Aviso legal** - Usa estas herramientas **solo en tu cuenta** o con permiso explícito de quien corresponda.  
 > 📵 No recopiles ni compartas datos de terceros sin su consentimiento.  
-> 📋 El uso de Instagram queda bajo **tu responsabilidad** y sus [términos de servicio](https://help.instagram.com/); este proyecto es una utilidad sin garantías ni soporte oficial.
+> 📋 El uso de Instagram queda bajo **tu responsabilidad** y sus <a href="https://help.instagram.com/" target="_blank" rel="noopener noreferrer">términos de servicio</a>; este proyecto es una utilidad sin garantías ni soporte oficial.
 
 <details>
 <summary><strong>CLONAR REPOSITORIO Y COMPARADOR EN TERMINAL</strong></summary>
@@ -76,7 +76,7 @@ Alternativa en terminal: [`npm run comparador`](#comparador-en-terminal).
 ### Requisitos
 
 - Navegador con Instagram (sesión iniciada) para los scripts de consola
-- [Node.js](https://nodejs.org/) solo para `npm run comparador`
+- <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer">Node.js</a> solo para `npm run comparador`
 
 ### Instalación
 
@@ -130,7 +130,7 @@ Abre los HTML de `public/` en el navegador (no hace falta servidor):
 | Comparar | `public/comparar/index.html` |
 | Analizador | `public/analizador/index.html` |
 
-En GitHub Pages: [josejavierdiazgonzalez.github.io/seguidores-scraper/](https://josejavierdiazgonzalez.github.io/seguidores-scraper/)
+En GitHub Pages: <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/" target="_blank" rel="noopener noreferrer">josejavierdiazgonzalez.github.io/seguidores-scraper/</a>
 
 ### Estructura del repo
 
