@@ -48,7 +48,7 @@ Cuando termine el proceso, descarga seguidores y seguidos. Nómbralos empezando 
   <img src="images/03-extraer-descargar-txt.png" alt="Descargar seguidores y seguidos" width="360">
 </p>
 
-Guárdalos en `scraper/<cuenta>/` (carpeta local, una por perfil). Más detalle abajo en **Clonar el repo**.
+Guárdalos en `scraper/<cuenta>/` (carpeta local, una por perfil). Más detalle en [Comparador en terminal](#comparador-en-terminal).
 
 ---
 
@@ -60,14 +60,14 @@ En [Analizador](https://josejavierdiazgonzalez.github.io/seguidores-scraper/anal
   <img src="images/04-analizador-comparacion-1.png" alt="Analizador: comparacion de seguidores y seguidos" width="747">
 </p>
 
-Alternativa en terminal: `npm run comparador` (ver sección clonar).
+Alternativa en terminal: [`npm run comparador`](#comparador-en-terminal).
 
 ---
 
 <sub>Usa estas herramientas solo sobre **tu cuenta** o con permiso. Respeta los términos de Instagram y la privacidad de terceros.</sub>
 
 <details>
-<summary><strong>Clonar el repo y ejecutarlo en local</strong></summary>
+<summary><strong>Comparador en terminal y archivos .txt</strong></summary>
 
 <br>
 
@@ -102,6 +102,8 @@ scraper/
 - `scraper/` no se sube a Git: es solo en tu PC.
 
 Ejemplo listo para probar en [`ejemplo/`](ejemplo/).
+
+<a id="comparador-en-terminal"></a>
 
 ### Comparador en terminal
 
