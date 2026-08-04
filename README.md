@@ -48,6 +48,8 @@ Cuando termine el proceso, descarga seguidores y seguidos. Nómbralos empezando 
   <img src="images/03-extraer-descargar-txt.png" alt="Descargar seguidores y seguidos" width="360">
 </p>
 
+Guárdalos en `scraper/<cuenta>/` (carpeta local, una por perfil). Más detalle abajo en **Clonar el repo**.
+
 ---
 
 ## 4. Analizador
@@ -58,6 +60,8 @@ En [Analizador](https://josejavierdiazgonzalez.github.io/seguidores-scraper/anal
   <img src="images/04-analizador-comparacion-1.png" alt="Analizador: comparacion de seguidores y seguidos" width="747">
 </p>
 
+Alternativa en terminal: `npm run comparador` (ver sección clonar).
+
 ---
 
 <sub>Usa estas herramientas solo sobre **tu cuenta** o con permiso. Respeta los términos de Instagram y la privacidad de terceros.</sub>
@@ -67,12 +71,10 @@ En [Analizador](https://josejavierdiazgonzalez.github.io/seguidores-scraper/anal
 
 <br>
 
-Para modificar el código, usar el comparador en terminal o desplegar tu propia copia.
-
 ### Requisitos
 
-- [Node.js](https://nodejs.org/)
-- Navegador con Instagram (sesión iniciada)
+- Navegador con Instagram (sesión iniciada) para los scripts de consola
+- [Node.js](https://nodejs.org/) solo para `npm run comparador`
 
 ### Instalación
 
@@ -82,11 +84,9 @@ cd seguidores-scraper
 npm install
 ```
 
-`npm run build` solo hace falta si vas a regenerar el **Copy code** de extraer/comparar tras editar los scripts en `otros/`.
-
 ### Carpeta `scraper/` (tus `.txt`)
 
-Crea una carpeta por cuenta y guarda ahí todos los `.txt` de seguidores y seguidos:
+Crea una carpeta por cuenta y guarda ahí todos los `.txt`:
 
 ```text
 scraper/
@@ -97,11 +97,11 @@ scraper/
     └── seguidos2Javi.txt
 ```
 
-- El nombre debe **empezar por** `seguidores` o `seguidos` (así el comparador sabe el tipo).
-- **Seguidores** y **seguidos** van en la misma carpeta de la cuenta, mezclados.
-- `scraper/` está en `.gitignore`: es solo local.
+- El nombre debe **empezar por** `seguidores` o `seguidos`.
+- Seguidores y seguidos van en la **misma carpeta**, mezclados.
+- `scraper/` no se sube a Git: es solo en tu PC.
 
-Archivos de ejemplo y más detalle en [`ejemplo/`](ejemplo/).
+Ejemplo listo para probar en [`ejemplo/`](ejemplo/).
 
 ### Comparador en terminal
 
@@ -109,50 +109,36 @@ Archivos de ejemplo y más detalle en [`ejemplo/`](ejemplo/).
 npm run comparador
 ```
 
-Elige la carpeta de cuenta, luego archivo **base** y **comparación** para seguidores y para seguidos.
+Elige carpeta, archivo **base** y **comparación** para seguidores y seguidos.
 
 <p align="center">
   <img src="images/05-comparador-terminal.png" alt="Comparador en terminal" width="560">
 </p>
 
-### Páginas en local
+### Abrir las páginas en local
 
-| Qué | Ruta local | GitHub Pages |
-|-----|------------|--------------|
-| Menú | `public/index.html` | [/](https://josejavierdiazgonzalez.github.io/seguidores-scraper/) |
-| Extraer | `public/extraer/index.html` | [/extraer/](https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/) |
-| Comparar | `public/comparar/index.html` | [/comparar/](https://josejavierdiazgonzalez.github.io/seguidores-scraper/comparar/) |
-| Analizador | `public/analizador/index.html` | [/analizador/](https://josejavierdiazgonzalez.github.io/seguidores-scraper/analizador/) |
+Abre los HTML de `public/` en el navegador (no hace falta servidor):
 
-### Estructura del proyecto
+| Página | Archivo |
+|--------|---------|
+| Menú | `public/index.html` |
+| Extraer | `public/extraer/index.html` |
+| Comparar | `public/comparar/index.html` |
+| Analizador | `public/analizador/index.html` |
+
+En GitHub Pages: [josejavierdiazgonzalez.github.io/seguidores-scraper/](https://josejavierdiazgonzalez.github.io/seguidores-scraper/)
+
+### Estructura del repo
 
 ```text
 seguidores-scraper/
+├── public/              # Web: extraer, comparar, analizador
 ├── scripts/
-│   ├── comparador-txt.js          # npm run comparador
-│   └── build.js                   # npm run build
-├── public/                        # GitHub Pages
-│   ├── index.html
-│   ├── extraer/index.html
-│   ├── comparar/index.html
-│   └── analizador/index.html
-├── images/                        # Capturas del README
-├── ejemplo/                       # .txt de muestra
-├── scraper/                       # gitignore (tus exportaciones)
-├── otros/                         # gitignore (fuentes del extractor)
+│   └── comparador-txt.js
+├── ejemplo/             # .txt de muestra
+├── images/              # Capturas del README
+├── scraper/             # Tus .txt (local, gitignore)
 └── package.json
 ```
-
-### Mantenimiento
-
-**Extraer** - tras editar el `.js` en `otros/`:
-
-```bash
-npm run build
-```
-
-**Comparar** - minificado en `otros/comparar-minified.js` y el mismo `npm run build`.
-
-Commit de `public/extraer/index.html` y `public/comparar/index.html` + push. GitHub Actions publica `public/` solo cuando cambia `public/**`.
 
 </details>
