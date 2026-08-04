@@ -4,39 +4,60 @@
 
 <h1 align="center">Seguidores Scraper</h1>
 
-Compara listas de **seguidores** y **seguidos** entre dos fechas.
+<p align="center">
+  Compara listas de <strong>seguidores</strong> y <strong>seguidos</strong> entre dos fechas.
+</p>
 
-**1.** Abre [extraer](https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/) y pulsa **Copy code**.
+<p align="center">
+  <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/">Extraer</a>
+  ·
+  <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/comparar/">Comparar</a>
+  ·
+  <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/analizador/">Analizador</a>
+</p>
 
+<br>
+
+<h3 align="center">1 · Copy code</h3>
+<p align="center">Abre <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/">extraer</a> y pulsa <strong>Copy code</strong>.</p>
 <p align="center">
   <img src="images/01-extraer-copy-code.gif" alt="Pagina extraer con Copy code" width="480">
 </p>
 
-**2.** En Instagram: perfil → `F12` → **Console** → pega y **Enter**.
+<br>
 
+<h3 align="center">2 · Consola de Instagram</h3>
+<p align="center">Perfil → <code>F12</code> → <strong>Console</strong> → pega y <strong>Enter</strong>.</p>
 <p align="center">
-  <img src="images/02-consola-pegar-ejecutar.gif" alt="Consola: pegar y ejecutar el script" width="100%">
+  <img src="images/02-consola-pegar-ejecutar.gif" alt="Consola: pegar y ejecutar el script" width="747">
 </p>
 
-**3.** Al terminar, descarga los `.txt` de seguidores y seguidos. El nombre debe empezar por `seguidores` o `seguidos`.
+<br>
 
+<h3 align="center">3 · Descargar .txt</h3>
+<p align="center">Al terminar, descarga seguidores y seguidos. El nombre debe empezar por <code>seguidores</code> o <code>seguidos</code>.</p>
 <p align="center">
-  <img src="images/03-extraer-descargar-txt.png" alt="Descargar seguidores y seguidos" width="380">
+  <img src="images/03-extraer-descargar-txt.png" alt="Descargar seguidores y seguidos" width="360">
 </p>
 
-**4.** Abre [analizador](https://josejavierdiazgonzalez.github.io/seguidores-scraper/analizador/), carga los `.txt` y elige **base** y **comparación** para seguidores y seguidos.
+<br>
 
+<h3 align="center">4 · Analizador</h3>
+<p align="center">Abre <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/analizador/">analizador</a>, carga los <code>.txt</code> y elige <strong>base</strong> y <strong>comparación</strong>.</p>
 <p align="center">
   <img src="images/04-analizador-comparacion.png" alt="Analizador: comparacion de seguidores y seguidos" width="747">
 </p>
 
----
+<br>
 
-Usa estas herramientas solo sobre **tu cuenta** o con permiso. Respeta los términos de Instagram y la privacidad de terceros.
+<p align="center"><sub>Usa estas herramientas solo sobre <strong>tu cuenta</strong> o con permiso. Respeta los términos de Instagram y la privacidad de terceros.</sub></p>
 
----
+<br>
 
-## Clonar el repo y ejecutarlo en local
+<details>
+<summary><strong>Clonar el repo y ejecutarlo en local</strong></summary>
+
+<br>
 
 Solo si quieres modificar el código, usar el comparador en terminal o desplegar tu propia copia.
 
@@ -83,3 +104,9 @@ seguidores-scraper/
 ```bash
 npm run build
 ```
+
+**Comparar** - minificado en `otros/comparar-minified.js` y el mismo `npm run build`.
+
+Commit de `public/extraer/index.html` y `public/comparar/index.html` + push. GitHub Actions publica `public/` en Pages.
+
+</details>
