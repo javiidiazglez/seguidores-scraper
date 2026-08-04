@@ -1,6 +1,8 @@
 # Carpeta de ejemplo
 
-Muestra cómo organizar los `.txt` antes de usar el comparador.
+Muestra cómo nombrar y organizar los `.txt` antes de usar el **analizador** o `npm run comparador`.
+
+## Estructura
 
 ```text
 ejemplo/
@@ -11,12 +13,30 @@ ejemplo/
     └── seguidos-comparacion.txt
 ```
 
-- **base**: archivo antiguo o más grande.
-- **comparacion**: archivo nuevo a contrastar.
+En tu PC, replica la misma idea dentro de `scraper/<cuenta>/`:
 
-El comparador detecta el tipo por el **nombre del archivo**:
+```text
+scraper/
+└── javi/
+    ├── seguidores1Javi.txt
+    ├── seguidores2Javi.txt
+    ├── seguidos1Javi.txt
+    └── seguidos2Javi.txt
+```
 
-- Empieza por `seguidores` → seguidores (p. ej. `seguidores29JulioJorge.txt`)
-- Empieza por `seguidos` → seguidos (p. ej. `seguidos3AgostoJorge.txt`)
+## Reglas de nombre
 
-Replica la misma idea en `scraper/<cuenta>/` (todos los `.txt` en la misma carpeta).
+| Prefijo | Tipo | Ejemplo |
+|---------|------|---------|
+| `seguidores` | Lista de seguidores | `seguidores29JulioJorge.txt` |
+| `seguidos` | Lista de seguidos | `seguidos3AgostoJorge.txt` |
+
+- **base**: archivo antiguo o más grande (referencia).
+- **comparación**: archivo nuevo a contrastar.
+
+Importante: `seguidores` debe ir **antes** que `seguidos` al nombrar, porque `seguidores…` también empieza por `seguidos`.
+
+## Uso
+
+- **Analizador (web):** sube los `.txt` y elige base y comparación.
+- **Terminal:** `npm run comparador` lee los archivos de `scraper/<cuenta>/`.
