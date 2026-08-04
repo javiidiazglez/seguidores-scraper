@@ -69,7 +69,7 @@ Alternativa en terminal: [`npm run comparador`](#comparador-en-terminal).
 > 📋 El uso de Instagram queda bajo **tu responsabilidad** y sus [términos de servicio](https://help.instagram.com/); este proyecto es una utilidad sin garantías ni soporte oficial.
 
 <details>
-<summary><strong>Comparador en terminal y archivos .txt</strong></summary>
+<summary><strong>CLONAR REPOSITORIO Y COMPARADOR EN TERMINAL</strong></summary>
 
 <br>
 
