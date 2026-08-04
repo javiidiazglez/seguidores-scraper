@@ -2,14 +2,14 @@
   <img src="images/logo.webp" alt="Seguidores Scraper" width="220">
 </p>
 
-# Seguidores Scraper
+<h1 align="center">Seguidores Scraper</h1>
 
 Compara listas de **seguidores** y **seguidos** entre dos fechas.
 
 **1.** Abre [extraer](https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/) y pulsa **Copy code**.
 
 <p align="center">
-  <img src="images/01-extraer-copy-code.gif" alt="Pagina extraer con Copy code" width="100%">
+  <img src="images/01-extraer-copy-code.gif" alt="Pagina extraer con Copy code" width="480">
 </p>
 
 **2.** En Instagram: perfil → `F12` → **Console** → pega y **Enter**.
@@ -21,7 +21,7 @@ Compara listas de **seguidores** y **seguidos** entre dos fechas.
 **3.** Al terminar, descarga los `.txt` de seguidores y seguidos. El nombre debe empezar por `seguidores` o `seguidos`.
 
 <p align="center">
-  <img src="images/03-extraer-descargar-txt.png" alt="Descargar seguidores y seguidos" width="467">
+  <img src="images/03-extraer-descargar-txt.png" alt="Descargar seguidores y seguidos" width="380">
 </p>
 
 **4.** Abre [analizador](https://josejavierdiazgonzalez.github.io/seguidores-scraper/analizador/), carga los `.txt` y elige **base** y **comparación** para seguidores y seguidos.
