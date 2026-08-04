@@ -64,7 +64,9 @@ Alternativa en terminal: [`npm run comparador`](#comparador-en-terminal).
 
 ---
 
-<sub>Usa estas herramientas solo sobre **tu cuenta** o con permiso. Respeta los términos de Instagram y la privacidad de terceros.</sub>
+> ⚠️ **Aviso legal** - Usa estas herramientas **solo en tu cuenta** o con permiso explícito de quien corresponda.  
+> 📵 No recopiles ni compartas datos de terceros sin su consentimiento.  
+> 📋 El uso de Instagram queda bajo **tu responsabilidad** y sus [términos de servicio](https://help.instagram.com/); este proyecto es una utilidad sin garantías ni soporte oficial.
 
 <details>
 <summary><strong>Comparador en terminal y archivos .txt</strong></summary>
