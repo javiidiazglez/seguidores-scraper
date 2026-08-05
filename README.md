@@ -9,11 +9,11 @@
 </p>
 
 <p align="center">
-  <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/" target="_blank" rel="noopener noreferrer">Extraer</a>
+  <a href="https://josejavierdiazglez.github.io/seguidores-scraper/extraer/" target="_blank" rel="noopener noreferrer">Extraer</a>
   ·
-  <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/comparar/" target="_blank" rel="noopener noreferrer">Comparar</a>
+  <a href="https://josejavierdiazglez.github.io/seguidores-scraper/comparar/" target="_blank" rel="noopener noreferrer">Comparar</a>
   ·
-  <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/analizador/" target="_blank" rel="noopener noreferrer">Analizador</a>
+  <a href="https://josejavierdiazglez.github.io/seguidores-scraper/analizador/" target="_blank" rel="noopener noreferrer">Analizador</a>
 </p>
 
 ---
@@ -22,7 +22,7 @@
 
 ## 1. Copiar código
 
-Entra en <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/extraer/" target="_blank" rel="noopener noreferrer">Extraer</a>, pulsa **Copy code** y copia el script.
+Entra en <a href="https://josejavierdiazglez.github.io/seguidores-scraper/extraer/" target="_blank" rel="noopener noreferrer">Extraer</a>, pulsa **Copy code** y copia el script.
 
 <p align="center">
   <img src="images/01-extraer-copy-code.gif" alt="Pagina extraer con Copy code" width="480">
@@ -54,7 +54,7 @@ Guárdalos en `scraper/<cuenta>/` (carpeta local, una por perfil). Más detalle 
 
 ## 4. Analizador
 
-En <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/analizador/" target="_blank" rel="noopener noreferrer">Analizador</a>, sube los archivos y elige cuál es la **base** y cuál la **comparación** (seguidores y seguidos por separado).
+En <a href="https://josejavierdiazglez.github.io/seguidores-scraper/analizador/" target="_blank" rel="noopener noreferrer">Analizador</a>, sube los archivos y elige cuál es la **base** y cuál la **comparación** (seguidores y seguidos por separado).
 
 <p align="center">
   <img src="images/04-analizador-comparacion-1.png" alt="Analizador: comparacion de seguidores y seguidos" width="747">
@@ -130,7 +130,7 @@ Abre los HTML de `public/` en el navegador (no hace falta servidor):
 | Comparar | `public/comparar/index.html` |
 | Analizador | `public/analizador/index.html` |
 
-En GitHub Pages: <a href="https://josejavierdiazgonzalez.github.io/seguidores-scraper/" target="_blank" rel="noopener noreferrer">josejavierdiazgonzalez.github.io/seguidores-scraper/</a>
+En GitHub Pages: <a href="https://josejavierdiazglez.github.io/seguidores-scraper/" target="_blank" rel="noopener noreferrer">josejavierdiazglez.github.io/seguidores-scraper/</a>
 
 ### Estructura del repo
 
