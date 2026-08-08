@@ -60,7 +60,7 @@ En <a href="https://josejavierdiazglez.github.io/seguidores-scraper/analizador/"
   <img src="images/04-analizador-comparacion-1.png" alt="Analizador: comparacion de seguidores y seguidos" width="747">
 </p>
 
-Alternativa en terminal: [`npm run comparador`](#comparador-en-terminal).
+Alternativa en terminal: [`pnpm run comparador`](#comparador-en-terminal).
 
 ---
 
@@ -76,15 +76,15 @@ Alternativa en terminal: [`npm run comparador`](#comparador-en-terminal).
 ### Requisitos
 
 - Navegador con Instagram (sesión iniciada) para los scripts de consola
-- <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer">Node.js</a> solo para `npm run comparador`
+- <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer">Node.js</a> + <a href="https://pnpm.io/" target="_blank" rel="noopener noreferrer">pnpm</a> solo para `pnpm run comparador`
 
 ### Instalación
 
 ```bash
 git clone git@github.com:josejavierdiazglez/seguidores-scraper.git
 cd seguidores-scraper
-npm install
-npm test
+pnpm install
+pnpm test
 ```
 
 ### Carpeta `scraper/` (tus `.txt`)
@@ -111,7 +111,7 @@ Ejemplo listo para probar en [`ejemplo/`](ejemplo/).
 ### Comparador en terminal
 
 ```bash
-npm run comparador
+pnpm run comparador
 ```
 
 Elige carpeta, archivo **base** y **comparación** para seguidores y seguidos.
@@ -145,7 +145,8 @@ seguidores-scraper/
 ├── ejemplo/             # .txt de muestra
 ├── images/              # Capturas del README
 ├── scraper/             # Tus .txt (local, gitignore)
-└── package.json         # npm test, npm run comparador
+├── package.json         # pnpm test, pnpm run comparador
+└── pnpm-lock.yaml
 ```
 
 </details>

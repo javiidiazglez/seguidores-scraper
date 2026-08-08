@@ -12,9 +12,13 @@ dist/
 # Comprobación temporal de sintaxis (build)
 .build-check.js
 
+# Dependencias
+node_modules/
+
 # Sistema
 .DS_Store
 Thumbs.db
+
 
 # Entorno
 .env

@@ -1,7 +1,11 @@
 {
   "name": "seguidores-scraper",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "private": true,
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "node scripts/build.js",
     "comparador": "node scripts/comparador-txt.js",

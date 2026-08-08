@@ -4,7 +4,7 @@
 /**
  * Minifica el extractor (extraer) con Terser y embebe otros/comparar-minified.js (comparar) en GitHub Pages.
  *
- *   npm run build
+ *   pnpm run build
  *   node scripts/build.js otros/otro-archivo.js
  */
 
@@ -43,7 +43,7 @@ function minificarConTerser(fuentePath) {
             windowsHide: true,
         });
     } else {
-        salida = execSync(`npx --yes terser "${archivo}" -c -m`, {
+        salida = execSync(`pnpm exec terser "${archivo}" -c -m`, {
             encoding: 'utf8',
             cwd: root,
             stdio: ['ignore', 'pipe', 'pipe'],
@@ -151,8 +151,8 @@ function resolverMinificadoExtraer() {
 
     console.error(
         'No hay fuente ni bundle para extraer.\n' +
-            '  npm install\n' +
-            '  npm run build\n' +
+            '  pnpm install\n' +
+            '  pnpm run build\n' +
             'o: node scripts/build.js otros/seguidores-seguidos-scraper_completo.js'
     );
     process.exit(1);
@@ -175,7 +175,7 @@ function resolverMinificadoComparar() {
 
     console.error(
         'No hay otros/comparar-minified.js ni bundle en public/comparar/index.html.\n' +
-            '  Coloca el minificado en otros/comparar-minified.js y ejecuta npm run build'
+            '  Coloca el minificado en otros/comparar-minified.js y ejecuta pnpm run build'
     );
     process.exit(1);
 }
@@ -197,7 +197,7 @@ function main() {
         minificadoComparar = resolverMinificadoComparar();
     } catch (error) {
         console.error('Error al preparar bundles:', error.message || error);
-        console.error('Ejecuta: npm install   (instala terser local)');
+        console.error('Ejecuta: pnpm install   (instala terser local)');
         process.exit(1);
     }
 
