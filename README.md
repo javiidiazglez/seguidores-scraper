@@ -81,9 +81,10 @@ Alternativa en terminal: [`npm run comparador`](#comparador-en-terminal).
 ### Instalación
 
 ```bash
-git clone https://github.com/josejavierdiazgonzalez/seguidores-scraper.git
+git clone git@github.com:josejavierdiazglez/seguidores-scraper.git
 cd seguidores-scraper
 npm install
+npm test
 ```
 
 ### Carpeta `scraper/` (tus `.txt`)
@@ -138,11 +139,13 @@ En GitHub Pages: <a href="https://josejavierdiazglez.github.io/seguidores-scrape
 seguidores-scraper/
 ├── public/              # Web: extraer, comparar, analizador
 ├── scripts/
-│   └── comparador-txt.js
+│   ├── comparador-lib.js
+│   ├── comparador-txt.js
+│   └── comparador-txt.test.js
 ├── ejemplo/             # .txt de muestra
 ├── images/              # Capturas del README
 ├── scraper/             # Tus .txt (local, gitignore)
-└── package.json
+└── package.json         # npm test, npm run comparador
 ```
 
 </details>

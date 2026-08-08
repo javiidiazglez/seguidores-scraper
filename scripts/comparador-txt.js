@@ -6,18 +6,15 @@ const fs = require('fs/promises');
 const path = require('path');
 const readline = require('readline/promises');
 const { stdin: input, stdout: output } = require('process');
+const {
+    normalizarLista,
+    compararListas,
+    tipoDeArchivo,
+    formatearResumenDiferencia,
+} = require('./comparador-lib');
 
-const USUARIOS_OMITIR = new Set(['fonsi.100']);
-
-function esFalsoPositivo(nombre) {
-    return USUARIOS_OMITIR.has(nombre.toLowerCase());
-}
-
-function normalizarLista(texto) {
-    return texto
-        .split(/\r?\n/)
-        .map(linea => linea.trim())
-        .filter(linea => Boolean(linea) && !esFalsoPositivo(linea));
+function formatarRuta(ruta) {
+    return path.normalize(ruta);
 }
 
 async function leerLista(ruta) {
@@ -31,15 +28,6 @@ async function leerLista(ruta) {
     };
 }
 
-function formatarRuta(ruta) {
-    return path.normalize(ruta);
-}
-
-function compararListas(listaOrigen, listaDestino) {
-    const setDestino = new Set(listaDestino.unicos);
-    return listaOrigen.unicos.filter(nombre => !setDestino.has(nombre));
-}
-
 function formatearListaNumerada(lista) {
     return lista.map((nombre, indice) => `${indice + 1}. ${nombre}`).join('\n');
 }
@@ -50,25 +38,6 @@ async function listarDirectorios(basePath) {
         .filter(entry => entry.isDirectory() && !entry.name.startsWith('.'))
         .map(entry => entry.name)
         .sort((a, b) => a.localeCompare(b, 'es'));
-}
-
-function tipoDeArchivo(nombreArchivo) {
-    const nombre = path.basename(nombreArchivo).toLowerCase();
-
-    if (!nombre.endsWith('.txt')) {
-        return null;
-    }
-
-    // seguidores antes que seguidos: «seguidores…» también empieza por «seguidos»
-    if (nombre.startsWith('seguidores')) {
-        return 'seguidores';
-    }
-
-    if (nombre.startsWith('seguidos')) {
-        return 'seguidos';
-    }
-
-    return null;
 }
 
 async function listarTxtsPorTipo(carpeta, tipo) {
@@ -134,26 +103,6 @@ async function seleccionarArchivosPorTipo(rl, rutaCuenta, tipo) {
         base: path.join(rutaCuenta, archivos[indiceBase]),
         comparacion: path.join(rutaCuenta, archivos[indiceComparacion]),
     };
-}
-
-function formatearDiferencia(cantidad) {
-    return cantidad > 0 ? `(-${cantidad})` : '(0)';
-}
-
-function formatearResumenDiferencia(totalBase, totalComparacion, cantidadDiferencia) {
-    if (cantidadDiferencia === 0) {
-        return `Sin Diferencias. ${totalBase} = ${totalComparacion}: (0)`;
-    }
-
-    if (totalBase > totalComparacion) {
-        return `Baja de ${totalBase} a ${totalComparacion}: ${formatearDiferencia(cantidadDiferencia)}`;
-    }
-
-    if (totalBase < totalComparacion) {
-        return `Sube de ${totalBase} a ${totalComparacion}: ${formatearDiferencia(cantidadDiferencia)}`;
-    }
-
-    return `${totalBase} = ${totalComparacion}: ${formatearDiferencia(cantidadDiferencia)}`;
 }
 
 async function main() {
@@ -236,7 +185,9 @@ async function main() {
     }
 }
 
-main().catch(error => {
-    console.error('Error al comparar archivos:', error.message);
-    process.exitCode = 1;
-});
+if (require.main === module) {
+    main().catch(error => {
+        console.error('Error al comparar archivos:', error.message);
+        process.exitCode = 1;
+    });
+}

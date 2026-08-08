@@ -34,7 +34,7 @@ scraper/
 - **base**: archivo antiguo o más grande (referencia).
 - **comparación**: archivo nuevo a contrastar.
 
-Importante: `seguidores` debe ir **antes** que `seguidos` al nombrar, porque `seguidores…` también empieza por `seguidos`.
+El comparador mira el **inicio del nombre** (`startsWith`): primero `seguidores`, luego `seguidos`. Usa siempre ese prefijo claro.
 
 ## Uso
 
